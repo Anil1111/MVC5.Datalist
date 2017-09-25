@@ -478,10 +478,10 @@ var MvcDatalist = (function () {
             this.readonly = readonly;
 
             if (readonly) {
-                this.search.autocomplete('disable').attr('readonly', 'readonly');
+                this.search.autocomplete('disable').attr({ readonly: 'readonly', tabindex: -1 });
                 this.group.addClass('datalist-readonly');
             } else {
-                this.search.autocomplete('enable').removeAttr('readonly');
+                this.search.autocomplete('enable').removeAttr('readonly').removeAttr('tabindex');
                 this.group.removeClass('datalist-readonly');
             }
 
