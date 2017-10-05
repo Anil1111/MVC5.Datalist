@@ -59,7 +59,7 @@ namespace Datalist
             IQueryable<T> notSelected = Sort(FilterByRequest(models));
 
             if (Filter.Ids.Count == 0 && Filter.Selected.Count > 0)
-                selected = Sort(FilterByIds(models, Filter.Selected));
+                selected = Sort(FilterBySelected(models, Filter.Selected));
 
             return FormDatalistData(notSelected, selected, Page(notSelected));
         }
@@ -142,6 +142,10 @@ namespace Datalist
                 return models.Where($"!@0.Contains(outerIt.{key.Name})", Parse<Int64>(ids));
 
             throw new DatalistException($"'{typeof(T).Name}.{key.Name}' property type has to be a string, int or a long.");
+        }
+        public virtual IQueryable<T> FilterBySelected(IQueryable<T> models, IList<String> ids)
+        {
+            return FilterByIds(models, ids);
         }
 
         public virtual IQueryable<T> Sort(IQueryable<T> models)

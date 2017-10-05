@@ -193,6 +193,9 @@ var MvcDatalistDialog = (function () {
                 this.tableBody.append(empty);
             }
 
+            var hasSplit = false;
+            var hasSelection = rows.length && this.datalist.indexOf(this.selected, rows[0].DatalistIdKey) >= 0;
+
             for (var i = 0; i < rows.length; i++) {
                 var tr = this.createDataRow(rows[i]);
                 var selection = document.createElement('td');
@@ -208,14 +211,16 @@ var MvcDatalistDialog = (function () {
                 }
 
                 tr.appendChild(selection);
-                this.tableBody.append(tr);
 
-                if (i == this.selected.length - 1) {
+                if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].DatalistIdKey) < 0) {
                     var separator = this.createEmptyRow(columns);
                     separator.className = 'datalist-split';
+                    hasSplit = true;
 
                     this.tableBody.append(separator);
                 }
+
+                this.tableBody.append(tr);
             }
         },
         renderFooter: function (filteredRows) {

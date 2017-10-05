@@ -519,6 +519,71 @@ namespace Datalist.Tests.Unit
 
         #endregion
 
+        #region FilterBySelected(IQueryable<T> models, IList<String> ids)
+
+        [Fact]
+        public void FilterBySelected_NoIdProperty_Throws()
+        {
+            TestDatalist<NoIdModel> testDatalist = new TestDatalist<NoIdModel>();
+
+            DatalistException exception = Assert.Throws<DatalistException>(() => testDatalist.FilterBySelected(null, null));
+
+            String expected = $"'{typeof(NoIdModel).Name}' type does not have key or property named 'Id', required for automatic id filtering.";
+            String actual = exception.Message;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FilterBySelected_String()
+        {
+            List<String> ids = new List<String> { "9I", "10I" };
+
+            IQueryable<TestModel> actual = datalist.FilterBySelected(datalist.GetModels(), ids);
+            IQueryable<TestModel> expected = datalist.GetModels().Where(model => ids.Contains(model.Id));
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FilterBySelected_Int32Key()
+        {
+            TestDatalist<Int32Model> testDatalist = new TestDatalist<Int32Model>();
+            for (Int32 i = 0; i < 20; i++)
+                testDatalist.Models.Add(new Int32Model { Value = i });
+
+            IQueryable<Int32Model> actual = testDatalist.FilterBySelected(testDatalist.GetModels(), new List<String> { "9", "10" });
+            IQueryable<Int32Model> expected = testDatalist.GetModels().Where(model => new[] { 9, 10 }.Contains(model.Value));
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FilterBySelected_Int64Key()
+        {
+            TestDatalist<Int64Model> testDatalist = new TestDatalist<Int64Model>();
+            for (Int64 i = 0; i < 20; i++)
+                testDatalist.Models.Add(new Int64Model { Value = i });
+
+            IQueryable<Int64Model> actual = testDatalist.FilterBySelected(testDatalist.GetModels(), new List<String> { "9", "10" });
+            IQueryable<Int64Model> expected = testDatalist.GetModels().Where(model => new[] { 9L, 10L }.Contains(model.Value));
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FilterBySelected_NotSupportedIdType_Throws()
+        {
+            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<GuidModel>().FilterBySelected(null, new String[0]));
+
+            String expected = $"'{typeof(GuidModel).Name}.Id' property type has to be a string, int or a long.";
+            String actual = exception.Message;
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
         #region Sort(IQueryable<T> models)
 
         [Fact]
