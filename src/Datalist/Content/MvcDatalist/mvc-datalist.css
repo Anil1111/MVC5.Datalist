@@ -332,22 +332,23 @@
 
 .datalist-split td {
     background-color: #FFFFFF;
+    color: transparent;
     cursor: default;
     border: none;
 }
 
-.datalist-dialog td:not(:first-child):last-child {
+.datalist-dialog td:last-child {
     box-sizing: border-box;
     text-align: center;
     font-weight: bold;
     width: 2.5em;
 }
 
-    .datalist-dialog td:not(:first-child):last-child::after {
+    .datalist-dialog td:last-child::after {
         content: '\25CF';
     }
 
-.datalist-dialog .selected td:not(:first-child):last-child::after {
+.datalist-dialog .selected td:last-child::after {
     content: '\2714';
     color: #5CB85C;
 }
