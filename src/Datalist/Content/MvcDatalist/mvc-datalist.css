@@ -347,15 +347,9 @@
         content: '\25CF';
     }
 
-.datalist-dialog tr:hover td:not(:first-child):last-child::after,
 .datalist-dialog .selected td:not(:first-child):last-child::after {
     content: '\2714';
     color: #5CB85C;
-}
-
-.datalist-dialog .selected:hover td:not(:first-child):last-child::after {
-    content: '\2718';
-    color: #D65A5A;
 }
 
 .datalist-empty {
