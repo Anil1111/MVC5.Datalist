@@ -8,7 +8,7 @@ namespace Datalist.Tests.Objects
         [DatalistColumn(-3, Hidden = true)]
         public String Id { get; set; }
 
-        [DatalistColumn(8)]
+        [DatalistColumn(8, Filterable = false)]
         [Display(Name = "Count's value", ShortName = "Value")]
         public Int32 Count { get; set; }
 

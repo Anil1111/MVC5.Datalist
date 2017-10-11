@@ -51,10 +51,10 @@ namespace Datalist.Tests.Unit
         public void MvcDatalist_AddsColumns()
         {
             List<DatalistColumn> columns = new List<DatalistColumn>();
-            columns.Add(new DatalistColumn("Id", null) { Hidden = true });
-            columns.Add(new DatalistColumn("Value", null) { Hidden = false });
-            columns.Add(new DatalistColumn("Date", "Date") { Hidden = false });
-            columns.Add(new DatalistColumn("Count", "Value") { Hidden = false });
+            columns.Add(new DatalistColumn("Id", null) { Hidden = true, Filterable = true });
+            columns.Add(new DatalistColumn("Value", null) { Hidden = false, Filterable = true });
+            columns.Add(new DatalistColumn("Date", "Date") { Hidden = false, Filterable = true });
+            columns.Add(new DatalistColumn("Count", "Value") { Hidden = false, Filterable = false });
 
             IEnumerator<DatalistColumn> expected = columns.GetEnumerator();
             IEnumerator<DatalistColumn> actual = datalist.Columns.GetEnumerator();
@@ -65,6 +65,7 @@ namespace Datalist.Tests.Unit
                 Assert.Equal(expected.Current.Header, actual.Current.Header);
                 Assert.Equal(expected.Current.Hidden, actual.Current.Hidden);
                 Assert.Equal(expected.Current.CssClass, actual.Current.CssClass);
+                Assert.Equal(expected.Current.Filterable, actual.Current.Filterable);
             }
         }
 
@@ -355,6 +356,19 @@ namespace Datalist.Tests.Unit
             datalist.Columns.Clear();
             datalist.Filter.Search = "1";
             datalist.Columns.Add(new DatalistColumn("Count", null));
+
+            IQueryable<TestModel> actual = datalist.FilterBySearch(datalist.GetModels());
+            IQueryable<TestModel> expected = datalist.GetModels();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FilterBySearch_DoesNotFilterNotFilterableColumns()
+        {
+            datalist.Columns.Clear();
+            datalist.Filter.Search = "1";
+            datalist.Columns.Add(new DatalistColumn("Value", null) { Filterable = false });
 
             IQueryable<TestModel> actual = datalist.FilterBySearch(datalist.GetModels());
             IQueryable<TestModel> expected = datalist.GetModels();

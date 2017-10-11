@@ -30,11 +30,15 @@ namespace Datalist
             Autocomplete = (model) => GetValue(model, Columns.Where(col => !col.Hidden).Select(col => col.Key).FirstOrDefault() ?? "");
 
             foreach (PropertyInfo property in AttributedProperties)
+            {
+                DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
                 Columns.Add(new DatalistColumn(GetColumnKey(property), GetColumnHeader(property))
                 {
-                    Hidden = property.GetCustomAttribute<DatalistColumnAttribute>(false).Hidden,
-                    CssClass = GetColumnCssClass(property)
+                    CssClass = GetColumnCssClass(property),
+                    Filterable = column.Filterable,
+                    Hidden = column.Hidden
                 });
+            }
         }
         public virtual String GetColumnKey(PropertyInfo property)
         {
@@ -87,7 +91,7 @@ namespace Datalist
                 return models;
 
             List<String> queries = new List<String>();
-            foreach (String property in Columns.Where(column => !column.Hidden).Select(column => column.Key))
+            foreach (String property in Columns.Where(column => !column.Hidden && column.Filterable).Select(column => column.Key))
                 if (typeof(T).GetProperty(property)?.PropertyType == typeof(String))
                     queries.Add($"({property} != null && {property}.ToLower().Contains(@0))");
 
