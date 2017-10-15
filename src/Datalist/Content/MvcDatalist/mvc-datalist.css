@@ -353,9 +353,18 @@
     color: #5CB85C;
 }
 
-.datalist-empty {
+.datalist-dialog .datalist-empty {
     text-align: center;
+    cursor: default;
 }
+
+    .datalist-dialog .datalist-empty:hover {
+        background-color: inherit;
+    }
+
+    .datalist-dialog .datalist-empty td::after {
+        content: '';
+    }
 
 .datalist-dialog ul {
     padding-top: 0.8em;
