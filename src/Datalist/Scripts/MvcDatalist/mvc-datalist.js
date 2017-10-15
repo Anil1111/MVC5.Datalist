@@ -164,6 +164,7 @@ var MvcDatalistDialog = (function () {
                 this.renderBody(data.Columns, data.Rows);
                 this.renderFooter(data.FilteredRows);
 
+                this.instance.parent().position({ my: 'left top', at: 'left top+50px', of: window, within: window });
                 this.instance.dialog({
                     position: this.options.dialog.position || { my: 'center top', at: 'center top+50px', of: window, within: window }
                 });
