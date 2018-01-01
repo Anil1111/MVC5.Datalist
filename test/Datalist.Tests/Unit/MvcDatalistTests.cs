@@ -30,10 +30,10 @@ namespace Datalist.Tests.Unit
 
         #endregion
 
-        #region AbstractDatalist()
+        #region MvcDatalist()
 
         [Fact]
-        public void AbstractDatalist_Defaults()
+        public void MvcDatalist_Defaults()
         {
             MvcDatalist actual = Substitute.For<MvcDatalist>();
 

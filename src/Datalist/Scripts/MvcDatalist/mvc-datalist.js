@@ -516,7 +516,7 @@ var MvcDatalist = (function () {
 
                         var rows = [];
                         for (var i = 0; i < ids.length; i++) {
-                            var index = datalist.indexOf(data.Rows, ids[i].value)
+                            var index = datalist.indexOf(data.Rows, ids[i].value);
                             if (index >= 0) {
                                 rows.push(data.Rows[index]);
                             }
@@ -708,7 +708,7 @@ var MvcDatalist = (function () {
 
                                 var rows = [];
                                 for (var i = 0; i < ids.length; i++) {
-                                    var index = datalist.indexOf(data.Rows, ids[i].value)
+                                    var index = datalist.indexOf(data.Rows, ids[i].value);
                                     if (index >= 0) {
                                         rows.push(data.Rows[index]);
                                     }
