@@ -446,7 +446,7 @@ var MvcDatalist = (function () {
                             url: datalist.url + datalist.filter.getQuery({ search: request.term, rows: 20 }),
                             success: function (data) {
                                 response($.grep(data.Rows, function (row) {
-                                    return datalist.indexOf(datalist.selected, row.DatalistIdKey) < 0;
+                                    return !datalist.multi || datalist.indexOf(datalist.selected, row.DatalistIdKey) < 0;
                                 }).map(function (row) {
                                     return {
                                         label: row.DatalistAcKey,
