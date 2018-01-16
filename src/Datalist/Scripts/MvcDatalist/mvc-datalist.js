@@ -687,6 +687,13 @@ var MvcDatalist = (function () {
                     datalist.select([], true);
                 }
             });
+            datalist.search.on('blur.datalist', function () {
+                if (datalist.multi) {
+                    this.value = '';
+                } else {
+                    this.value = datalist.selected[0].DatalistAcKey;
+                }
+            });
 
             datalist.browse.on('click.datalist', function () {
                 datalist.open();
