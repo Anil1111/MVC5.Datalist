@@ -261,9 +261,11 @@ var MvcDatalistDialog = (function () {
             $(row).on('click.datalist', function () {
                 var index = datalist.indexOf(dialog.selected, data.DatalistIdKey);
                 if (index >= 0) {
-                    dialog.selected.splice(index, 1);
+                    if (datalist.multi) {
+                        dialog.selected.splice(index, 1);
 
-                    $(this).removeClass('selected');
+                        $(this).removeClass('selected');
+                    }
                 } else {
                     if (datalist.multi) {
                         dialog.selected.push(data);
