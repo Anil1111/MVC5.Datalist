@@ -746,27 +746,47 @@ var MvcDatalist = (function () {
 $.fn.datalist = function (options) {
     var args = arguments;
 
-    return this.each(function () {
-        var group = $(this).closest('.datalist');
-        if (!group.length)
-            return;
+    if (options === 'instance') {
+        var instances = [];
 
-        if (!$.data(group[0], 'mvc-datalist')) {
-            if (typeof options == 'string') {
-                var datalist = new MvcDatalist(group);
-                datalist.methods[options].apply(datalist, [].slice.call(args, 1));
-            } else {
-                var datalist = new MvcDatalist(group, options);
+        for (var i = 0; i < this.length; i++) {
+            var datalist = $(this[i]).closest('.datalist');
+            if (!datalist.length)
+                continue;
+
+            var instance = datalist.data('mvc-datalist');
+
+            if (!instance) {
+                datalist.data('mvc-datalist', instance = new MvcDatalist(datalist, options));
             }
 
-            $.data(group[0], 'mvc-datalist', datalist);
-        } else {
-            var datalist = $.data(group[0], 'mvc-datalist');
+            instances.push(instance);
+        }
 
+        return this.length <= 1 ? instances[0] : instances;
+    }
+
+    return this.each(function () {
+        var datalist = $(this).closest('.datalist');
+        if (!datalist.length)
+            return;
+
+        var instance = datalist.data('mvc-datalist');
+
+        if (!instance) {
             if (typeof options == 'string') {
-                datalist.methods[options].apply(datalist, [].slice.call(args, 1));
+                instance = new MvcDatalist(datalist);
+                instance.methods[options].apply(instance, [].slice.call(args, 1));
+            } else {
+                instance = new MvcDatalist(datalist, options);
+            }
+
+            datalist.data('mvc-datalist', instance);
+        } else {
+            if (typeof options == 'string') {
+                instance.methods[options].apply(instance, [].slice.call(args, 1));
             } else if (options) {
-                datalist.set(options);
+                instance.set(options);
             }
         }
     });
