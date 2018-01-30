@@ -690,10 +690,10 @@ var MvcDatalist = (function () {
                 }
             });
             datalist.search.on('blur.datalist', function () {
-                if (datalist.multi) {
-                    this.value = '';
-                } else {
+                if (!datalist.multi && datalist.selected.length) {
                     this.value = datalist.selected[0].DatalistAcKey;
+                } else {
+                    this.value = '';
                 }
             });
 
