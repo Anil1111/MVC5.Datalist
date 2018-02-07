@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.4.0
+ * Datalist 5.5.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -677,6 +677,14 @@ var MvcDatalist = (function () {
 
             $(window).on('resize.datalist', function () {
                 datalist.resizeDatalistSearch();
+            });
+
+            datalist.group.on('focusin.datalist', function () {
+                $(this).addClass('datalist-focus');
+            });
+
+            datalist.group.on('focusout.datalist', function () {
+                $(this).removeClass('datalist-focus');
             });
 
             datalist.search.on('keydown.datalist', function (e) {
