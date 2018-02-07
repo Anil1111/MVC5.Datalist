@@ -617,6 +617,8 @@ var MvcDatalist = (function () {
         },
 
         startLoading: function (delay) {
+            this.stopLoading();
+
             this.loading = setTimeout(function (datalist) {
                 datalist.search.addClass('datalist-loading');
             }, delay, this);
