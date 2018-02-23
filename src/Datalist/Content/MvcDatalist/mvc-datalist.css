@@ -380,17 +380,15 @@
         cursor: pointer;
     }
 
-        .datalist-dialog ul li + li span {
-            border-left: 0;
-        }
-
     .datalist-dialog ul span {
         border: 1px solid #DDDDDD;
         box-sizing: content-box;
         display: inline-block;
         padding: 0.4em 0.6em;
+        position: relative;
         text-align: center;
-        min-width: 0.9em;
+        margin-left: -1px;
+        min-width: 1em;
         color: #777777;
     }
 
@@ -405,4 +403,5 @@
     background-color: rgba(77, 78, 80, 0.76);
     border-color: rgba(77, 78, 80, 0.76);
     color: #FFFFFF;
+    z-index: 2;
 }
