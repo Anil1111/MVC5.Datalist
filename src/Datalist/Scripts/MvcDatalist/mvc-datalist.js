@@ -326,8 +326,9 @@ var MvcDatalistDialog = (function () {
             return header;
         },
         renderPage: function (text, value) {
-            var content = document.createElement('span');
+            var content = document.createElement('a');
             var page = document.createElement('li');
+            content.setAttribute('href', '#');
             page.appendChild(content);
             content.innerHTML = text;
             var dialog = this;
@@ -335,7 +336,9 @@ var MvcDatalistDialog = (function () {
             if (dialog.filter.page == value) {
                 page.className = 'active';
             } else {
-                $(content).on('click.datalist', function () {
+                $(content).on('click.datalist', function (e) {
+                    e.preventDefault();
+
                     var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / dialog.filter.rows);
                     if (value < expectedPages) {
                         dialog.filter.page = value;

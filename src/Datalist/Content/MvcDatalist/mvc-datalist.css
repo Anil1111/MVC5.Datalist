@@ -173,18 +173,19 @@
         border-radius: 0 5px 5px 0;
         border-right: medium none;
         box-sizing: content-box;
+        border-color: #CCCCCC;
         border-left: 0 none;
         height: 100%;
     }
 
     .datalist-rows input {
         background-color: #EEEEEE;
-        padding: 6px 1.6em 6px 0;
         line-height: 1.42857143;
         box-sizing: border-box;
+        margin: 0 1.6em 0 0;
         text-align: center;
-        width: 5em;
-        margin: 0;
+        padding: 6px 0;
+        width: 3.4em;
     }
 
     .datalist-rows a.ui-spinner-button {
@@ -380,28 +381,30 @@
         cursor: pointer;
     }
 
-    .datalist-dialog ul span {
+        .datalist-dialog ul li + li a {
+            margin-left: 3px;
+        }
+
+    .datalist-dialog ul a {
         border: 1px solid #DDDDDD;
         box-sizing: content-box;
         display: inline-block;
         padding: 0.4em 0.6em;
-        position: relative;
         text-align: center;
-        margin-left: -1px;
         min-width: 1em;
         color: #777777;
     }
 
-        .datalist-dialog ul span:focus,
-        .datalist-dialog ul span:hover {
+        .datalist-dialog ul a:focus,
+        .datalist-dialog ul a:hover {
             background-color: #EEEEEE;
             color: #777777;
         }
 
-.datalist-dialog .active span,
-.datalist-dialog .active span:hover {
+.datalist-dialog .active a,
+.datalist-dialog .active a:focus,
+.datalist-dialog .active a:hover {
     background-color: rgba(77, 78, 80, 0.76);
     border-color: rgba(77, 78, 80, 0.76);
     color: #FFFFFF;
-    z-index: 2;
 }
