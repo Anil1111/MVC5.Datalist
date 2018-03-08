@@ -700,8 +700,8 @@ namespace Datalist.Tests.Unit
             datalist.Columns.Clear();
             datalist.Filter.Sort = column;
 
+            IQueryable<TestModel> actual = datalist.Sort(datalist.GetModels().OrderByDescending(model => model.Id).Where(model => true));
             IQueryable<TestModel> expected = datalist.GetModels().OrderByDescending(model => model.Id);
-            IQueryable<TestModel> actual = datalist.Sort(datalist.GetModels().OrderByDescending(model => model.Id));
 
             Assert.Equal(expected, actual);
         }

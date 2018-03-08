@@ -159,7 +159,7 @@ namespace Datalist
         public virtual IQueryable<T> Sort(IQueryable<T> models)
         {
             if (String.IsNullOrWhiteSpace(Filter.Sort))
-                if (typeof(IOrderedQueryable).IsAssignableFrom(models.Expression.Type))
+                if (DatalistQuery.IsOrdered(models))
                     return models;
                 else
                     return models.OrderBy(model => 0);
