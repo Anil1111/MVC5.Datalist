@@ -79,7 +79,6 @@ var MvcDatalistDialog = (function () {
                     title: dialog.title,
                     draggable: false,
                     autoOpen: false,
-                    minWidth: 455,
                     width: 'auto',
                     modal: true
                 },
@@ -95,6 +94,7 @@ var MvcDatalistDialog = (function () {
                     }
                 },
                 resizable: {
+                    minWidth: 455,
                     handles: 'w,e',
                     stop: function () {
                         $(this).css('height', 'auto');
