@@ -417,12 +417,12 @@ var MvcDatalist = (function () {
         this.url = group.attr('data-url');
         this.selected = [];
 
-        this.browse = $('.datalist-browse[data-for="' + this.for + '"]');
-        this.valueContainer = $('.datalist-values[data-for="' + this.for + '"]');
-        this.values = this.valueContainer.find('.datalist-value');
-        this.control = group.find('.datalist-control');
-        this.search = group.find('.datalist-input');
         this.group = group;
+        this.search = group.find('.datalist-input');
+        this.browse = group.find('.datalist-browse');
+        this.control = group.find('.datalist-control');
+        this.valueContainer = group.find('.datalist-values');
+        this.values = this.valueContainer.find('.datalist-value');
 
         this.dialog = new MvcDatalistDialog(this);
         this.initOptions();
