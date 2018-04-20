@@ -31,19 +31,18 @@
         padding: 2px;
         border: none;
         margin: 2px;
-        float: left;
         width: 100%;
     }
 
 .datalist-item {
     transition: background linear 0.3s;
     border: 1px solid #DDDDDD;
+    display: inline-block;
     background: #F8F8F8;
     border-radius: 3px;
     padding: 1px 6px;
     color: #999999;
     margin: 2px;
-    float: left;
 }
 
     .datalist-item:hover {
@@ -337,6 +336,7 @@
 .datalist-split td {
     background-color: #FFFFFF;
     color: transparent;
+    font-size: 0.4em;
     cursor: default;
     border: none;
 }
@@ -388,6 +388,7 @@
     .datalist-dialog ul a {
         border: 1px solid #DDDDDD;
         box-sizing: content-box;
+        text-decoration: none;
         display: inline-block;
         padding: 0.4em 0.6em;
         text-align: center;
