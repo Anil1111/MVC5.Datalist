@@ -26,6 +26,7 @@
 }
 
     .datalist-control input {
+        background: none;
         outline: none;
         font: inherit;
         padding: 2px;
