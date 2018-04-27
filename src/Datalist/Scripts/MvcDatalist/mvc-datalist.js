@@ -259,6 +259,10 @@ var MvcDatalistDialog = (function () {
             }
 
             $(row).on('click.datalist', function () {
+                if (!window.getSelection().isCollapsed) {
+                    return;
+                }
+
                 var index = datalist.indexOf(dialog.selected, data.DatalistIdKey);
                 if (index >= 0) {
                     if (datalist.multi) {
