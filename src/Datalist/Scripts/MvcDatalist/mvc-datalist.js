@@ -339,20 +339,24 @@ var MvcDatalistDialog = (function () {
 
             if (dialog.filter.page == value) {
                 page.className = 'active';
-            } else {
-                $(content).on('click.datalist', function (e) {
-                    e.preventDefault();
-
-                    var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / dialog.filter.rows);
-                    if (value < expectedPages) {
-                        dialog.filter.page = value;
-                    } else {
-                        dialog.filter.page = expectedPages - 1;
-                    }
-
-                    dialog.refresh();
-                });
             }
+
+            $(content).on('click.datalist', function (e) {
+                e.preventDefault();
+
+                if (dialog.filter.page == value) {
+                    return;
+                }
+
+                var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / dialog.filter.rows);
+                if (value < expectedPages) {
+                    dialog.filter.page = value;
+                } else {
+                    dialog.filter.page = expectedPages - 1;
+                }
+
+                dialog.refresh();
+            });
 
             dialog.pager.append(page);
         },
