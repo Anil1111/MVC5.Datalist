@@ -381,10 +381,12 @@ var MvcDatalistDialog = (function () {
             var dialog = MvcDatalistDialog.prototype.current;
 
             this.value = dialog.limitRows(this.value);
-            dialog.datalist.filter.rows = this.value;
-            dialog.datalist.filter.page = 0;
+            if (dialog.datalist.filter.rows != this.value) {
+                dialog.datalist.filter.rows = this.value;
+                dialog.datalist.filter.page = 0;
 
-            dialog.refresh();
+                dialog.refresh();
+            }
         },
         searchChanged: function (e) {
             var input = this;
