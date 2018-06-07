@@ -43,7 +43,7 @@ namespace Datalist
 
             datalist.InnerHtml = CreateDatalistValues(html, model, name, value);
             datalist.InnerHtml += CreateDatalistControl(model, name);
-            datalist.InnerHtml += CreateDatalistBrowse(name);
+            datalist.InnerHtml += CreateDatalistBrowser(name);
 
             return new MvcHtmlString(datalist.ToString());
         }
@@ -55,7 +55,7 @@ namespace Datalist
 
             datalist.InnerHtml = CreateDatalistValues(html, model, expression);
             datalist.InnerHtml += CreateDatalistControl(model, name);
-            datalist.InnerHtml += CreateDatalistBrowse(name);
+            datalist.InnerHtml += CreateDatalistBrowser(name);
 
             return new MvcHtmlString(datalist.ToString());
         }
@@ -152,18 +152,18 @@ namespace Datalist
 
             return control.ToString();
         }
-        private static String CreateDatalistBrowse(String name)
+        private static String CreateDatalistBrowser(String name)
         {
-            TagBuilder browse = new TagBuilder("div");
-            browse.AddCssClass("datalist-browse");
-            browse.Attributes["data-for"] = name;
+            TagBuilder browser = new TagBuilder("div");
+            browser.AddCssClass("datalist-browser");
+            browser.Attributes["data-for"] = name;
 
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("datalist-icon");
 
-            browse.InnerHtml = icon.ToString();
+            browser.InnerHtml = icon.ToString();
 
-            return browse.ToString();
+            return browser.ToString();
         }
     }
 }

@@ -1,27 +1,38 @@
-﻿<div id="DatalistDialog" class="datalist-dialog">
-    <div class="datalist-search-group">
-        <div class="datalist-search-box">
-            <input class="datalist-search" />
-            <div class="datalist-rows">
-                <input />
+﻿<div class="datalist-overlay">
+    <div class="datalist-wrapper">
+        <div id="DatalistDialog" class="datalist-dialog">
+            <div class="datalist-header">
+                <span class="datalist-title"></span>
+                <button class="datalist-close">×</button>
             </div>
-            <div class="datalist-selector">
-                <button></button>
+            <div class="datalist-body">
+                <div class="datalist-search-group">
+                    <div class="datalist-search-box">
+                        <input class="datalist-search" />
+                        <div class="datalist-rows">
+                            <input />
+                        </div>
+                        <div class="datalist-selector">
+                            <button></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="datalist-content">
+                    <div class="datalist-dialog-loader">
+                        <span></span>
+                    </div>
+                    <div class="datalist-error">
+                    </div>
+                    <div class="datalist-table">
+                        <table>
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <ul></ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="datalist-content">
-        <div class="datalist-dialog-loader">
-            <span></span>
-        </div>
-        <div class="datalist-error">
-        </div>
-        <div class="datalist-table">
-            <table>
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        <ul></ul>
     </div>
 </div>
+<ul class="datalist-autocomplete"></ul>

@@ -195,7 +195,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"Test\">" +
+                    "<div class=\"datalist-browser\" data-for=\"Test\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
@@ -219,7 +219,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"Test\">" +
+                    "<div class=\"datalist-browser\" data-for=\"Test\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
@@ -244,7 +244,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"Test\">" +
+                    "<div class=\"datalist-browser\" data-for=\"Test\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
@@ -274,7 +274,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"ParentId\">" +
+                    "<div class=\"datalist-browser\" data-for=\"ParentId\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
@@ -298,7 +298,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"ParentId\">" +
+                    "<div class=\"datalist-browser\" data-for=\"ParentId\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
@@ -323,7 +323,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<div class=\"datalist-browse\" data-for=\"Values\">" +
+                    "<div class=\"datalist-browser\" data-for=\"Values\">" +
                         "<i class=\"datalist-icon\"></i>" +
                     "</div>" +
                 "</div>";
