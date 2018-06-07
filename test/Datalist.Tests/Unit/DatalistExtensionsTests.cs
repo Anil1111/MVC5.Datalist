@@ -44,10 +44,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"true\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" readonly=\"readonly\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -65,10 +65,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -88,11 +88,11 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value1\" />" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value2\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value1\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value2\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -116,10 +116,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"true\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-input\" readonly=\"readonly\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -137,10 +137,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -161,11 +161,11 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Values\">" +
-                        "<input class=\"datalist-value\" id=\"Values\" name=\"Values\" type=\"hidden\" value=\"Value1&#39;s\" />" +
-                        "<input class=\"datalist-value\" id=\"Values\" name=\"Values\" type=\"hidden\" value=\"Value2&#39;s\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Values\" name=\"Values\" type=\"hidden\" value=\"Value1&#39;s\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Values\" name=\"Values\" type=\"hidden\" value=\"Value2&#39;s\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Values\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                 "</div>";
@@ -189,10 +189,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"true\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" readonly=\"readonly\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"Test\">" +
@@ -213,10 +213,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
-                        "<input class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"Test\">" +
@@ -241,7 +241,7 @@ namespace Datalist.Tests.Unit
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"Test\">" +
@@ -268,10 +268,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"true\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-input\" readonly=\"readonly\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"ParentId\">" +
@@ -292,10 +292,10 @@ namespace Datalist.Tests.Unit
                         "data-page=\"2\" data-readonly=\"false\" data-rows=\"11\" data-search=\"Test\" data-sort=\"First\" " +
                         "data-title=\"Dialog datalist title\" data-url=\"http://localhost/Datalist\">" +
                     "<div class=\"datalist-values\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"ParentId\">" +
@@ -320,7 +320,7 @@ namespace Datalist.Tests.Unit
                     "<div class=\"datalist-values\" data-for=\"Values\">" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Values\">" +
-                        "<input class=\"datalist-input\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
                     "<div class=\"datalist-browse\" data-for=\"Values\">" +

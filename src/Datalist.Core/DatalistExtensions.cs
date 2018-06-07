@@ -96,6 +96,7 @@ namespace Datalist
 
             IDictionary<String, Object> attributes = new Dictionary<String, Object>();
             attributes["class"] = "datalist-value";
+            attributes["autocomplete"] = "off";
 
             TagBuilder container = new TagBuilder("div");
             container.AddCssClass("datalist-values");
@@ -109,6 +110,7 @@ namespace Datalist
         {
             IDictionary<String, Object> attributes = new Dictionary<String, Object>();
             attributes["class"] = "datalist-value";
+            attributes["autocomplete"] = "off";
 
             TagBuilder container = new TagBuilder("div");
             container.AddCssClass("datalist-values");
@@ -140,6 +142,7 @@ namespace Datalist
 
             if (datalist.ReadOnly) search.Attributes["readonly"] = "readonly";
             loader.AddCssClass("datalist-control-loader");
+            search.Attributes["autocomplete"] = "off";
             control.AddCssClass("datalist-control");
             control.Attributes["data-for"] = name;
             search.AddCssClass("datalist-input");
