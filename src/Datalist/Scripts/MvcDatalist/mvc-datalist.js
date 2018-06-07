@@ -67,13 +67,13 @@ var MvcDatalistDialog = (function () {
         this.table = this.instance.querySelector('table');
         this.tableHead = this.instance.querySelector('thead');
         this.tableBody = this.instance.querySelector('tbody');
+        this.rows = this.instance.querySelector('.datalist-rows');
         this.error = this.instance.querySelector('.datalist-error');
         this.header = this.instance.querySelector('.datalist-title');
         this.search = this.instance.querySelector('.datalist-search');
-        this.rows = this.instance.querySelector('.datalist-rows input');
+        this.selector = this.instance.querySelector('.datalist-selector');
         this.closeButton = this.instance.querySelector('.datalist-close');
         this.loader = this.instance.querySelector('.datalist-dialog-loader');
-        this.selector = this.instance.querySelector('.datalist-selector button');
     }
 
     MvcDatalistDialog.prototype = {
@@ -97,7 +97,7 @@ var MvcDatalistDialog = (function () {
             dialog.rows.value = dialog.limitRows(filter.rows);
             dialog.search.setAttribute('placeholder', dialog.lang['search']);
             filter.search = dialog.options.preserveSearch ? filter.search : '';
-            dialog.selector.parentNode.style.display = dialog.datalist.multi ? '' : 'none';
+            dialog.selector.style.display = dialog.datalist.multi ? '' : 'none';
             dialog.selector.innerText = dialog.lang['select'].replace('{0}', dialog.datalist.selected.length);
 
             dialog.bind();
