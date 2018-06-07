@@ -521,8 +521,9 @@ var MvcDatalist = (function () {
                 this.dialog.open();
             }
         },
-        selectFirst: function () {
+        selectFirst: function (triggerChanges) {
             var datalist = this;
+            triggerChanges = triggerChanges == null || triggerChanges;
 
             $.ajax({
                 url: datalist.url + datalist.filter.getQuery({ rows: 1 }),
@@ -530,15 +531,16 @@ var MvcDatalist = (function () {
                 success: function (data) {
                     datalist.stopLoading();
 
-                    datalist.select(data.Rows, true);
+                    datalist.select(data.Rows, triggerChanges);
                 },
                 error: function () {
                     datalist.stopLoading();
                 }
             });
         },
-        selectSingle: function () {
+        selectSingle: function (triggerChanges) {
             var datalist = this;
+            triggerChanges = triggerChanges == null || triggerChanges;
 
             $.ajax({
                 url: datalist.url + datalist.filter.getQuery({ rows: 2 }),
@@ -547,9 +549,9 @@ var MvcDatalist = (function () {
                     datalist.stopLoading();
 
                     if (data.Rows.length == 1) {
-                        datalist.select(data.Rows, true);
+                        datalist.select(data.Rows, triggerChanges);
                     } else {
-                        datalist.select([], true);
+                        datalist.select([], triggerChanges);
                     }
                 },
                 error: function () {
