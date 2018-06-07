@@ -98,6 +98,7 @@
 .datalist-icon {
     transform: rotate(310deg);
     vertical-align: middle;
+    box-sizing: border-box;
     display: inline-block;
     margin: 0 2px 2px 0;
     border-radius: 50%;
