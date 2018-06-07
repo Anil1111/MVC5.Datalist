@@ -35,6 +35,10 @@
         width: 100%;
     }
 
+        .datalist-control input::-ms-clear {
+            display: none;
+        }
+
 .datalist-item {
     transition: background linear 0.3s;
     border: 1px solid #DDDDDD;
@@ -163,6 +167,10 @@
     width: 100%;
 }
 
+    .datalist-search::-ms-clear {
+        display: none;
+    }
+
 .datalist-rows {
     vertical-align: top;
     display: table-cell;
@@ -203,6 +211,10 @@
         margin-left: -8px;
         cursor: pointer;
         left: 50%;
+    }
+
+    .datalist-rows input::-ms-clear {
+        display: none;
     }
 
 .datalist-selector {
