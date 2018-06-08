@@ -496,7 +496,7 @@ var MvcDatalistAutocomplete = (function () {
             }, autocomplete.datalist.options.searchDelay);
         },
         previous: function () {
-            if (!this.instance.style.display) {
+            if (!this.instance.parentNode) {
                 this.search(this.datalist.search.value);
 
                 return;
@@ -513,7 +513,7 @@ var MvcDatalistAutocomplete = (function () {
             }
         },
         next: function () {
-            if (!this.instance.style.display) {
+            if (!this.instance.parentNode) {
                 this.search(this.datalist.search.value);
 
                 return;
@@ -947,8 +947,6 @@ var MvcDatalist = (function () {
                 if (e.which != 9 && this.value.length == 0 && !datalist.multi && datalist.selected.length > 0) {
                     datalist.autocomplete.hide();
                     datalist.select([], true);
-                } else if (e.which != 13 && e.which != 38 && e.which != 40) {
-                    datalist.autocomplete.search(this.value);
                 }
             });
             datalist.search.addEventListener('input', function (e) {
