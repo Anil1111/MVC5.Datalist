@@ -12,11 +12,11 @@ var MvcDatalistFilter = (function () {
         var group = datalist.group;
 
         this.datalist = datalist;
-        this.page = group.dataset.page;
-        this.rows = group.dataset.rows;
         this.sort = group.dataset.sort;
         this.order = group.dataset.order;
         this.search = group.dataset.search;
+        this.page = parseInt(group.dataset.page);
+        this.rows = parseInt(group.dataset.rows);
         this.additionalFilters = group.dataset.filters.split(',').filter(Boolean);
     }
 
@@ -168,7 +168,6 @@ var MvcDatalistDialog = (function () {
         },
         renderHeader: function (columns) {
             var row = document.createElement('tr');
-            var selection = document.createElement('th');
 
             for (var i = 0; i < columns.length; i++) {
                 if (!columns[i].Hidden) {
@@ -176,16 +175,16 @@ var MvcDatalistDialog = (function () {
                 }
             }
 
-            row.appendChild(selection);
+            row.appendChild(document.createElement('th'));
             this.tableHead.appendChild(row);
         },
         renderBody: function (columns, rows) {
-            if (rows.length == 0) {
+            if (!rows.length) {
                 var empty = document.createElement('td');
                 var row = document.createElement('tr');
-                empty.innerHTML = this.lang['noData'];
 
                 empty.setAttribute('colspan', columns.length + 1);
+                empty.innerHTML = this.lang['noData'];
                 row.className = 'datalist-empty';
 
                 this.tableBody.appendChild(row);
@@ -213,12 +212,13 @@ var MvcDatalistDialog = (function () {
 
                 if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].DatalistIdKey) < 0) {
                     var separator = document.createElement('tr');
-                    separator.className = 'datalist-split';
                     var empty = document.createElement('td');
-                    separator.appendChild(empty);
 
                     empty.setAttribute('colspan', columns.length + 1);
+                    separator.className = 'datalist-split';
+
                     this.tableBody.appendChild(separator);
+                    separator.appendChild(empty);
 
                     hasSplit = true;
                 }
@@ -226,16 +226,16 @@ var MvcDatalistDialog = (function () {
                 this.tableBody.appendChild(row);
             }
         },
-        renderFooter: function (FilteredRows) {
+        renderFooter: function (filteredRows) {
             var dialog = this;
             var filter = dialog.datalist.filter;
-            var totalPages = Math.ceil(FilteredRows / filter.rows);
-            dialog.totalRows = FilteredRows + dialog.selected.length;
+            var totalPages = Math.ceil(filteredRows / filter.rows);
+            dialog.totalRows = filteredRows + dialog.selected.length;
 
-            if (totalPages > 0) {
+            if (totalPages) {
                 var startingPage = Math.floor(filter.page / 4) * 4;
 
-                if (0 < filter.page && 4 < totalPages) {
+                if (filter.page && 4 < totalPages) {
                     dialog.renderPage('&laquo', 0);
                     dialog.renderPage('&lsaquo;', filter.page - 1);
                 }
@@ -255,21 +255,17 @@ var MvcDatalistDialog = (function () {
         renderPage: function (text, value) {
             var page = document.createElement('button');
             var filter = this.datalist.filter;
-            page.innerHTML = text;
             var dialog = this;
 
             if (filter.page == value) {
                 page.className = 'active';
             }
 
+            page.innerHTML = text;
             page.addEventListener('click', function () {
                 if (filter.page != value) {
-                    var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / filter.rows);
-                    if (value < expectedPages) {
-                        filter.page = value;
-                    } else {
-                        filter.page = expectedPages - 1;
-                    }
+                    var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / filter.rows) - 1;
+                    filter.page = Math.min(value, expectedPages);
 
                     dialog.refresh();
                 }
@@ -280,26 +276,22 @@ var MvcDatalistDialog = (function () {
 
         createHeaderColumn: function (column) {
             var header = document.createElement('th');
-            header.innerText = column.Header || '';
             var filter = this.datalist.filter;
             var dialog = this;
 
             if (column.CssClass) {
-                header.className = column.CssClass;
+                header.classList.add(column.CssClass);
             }
 
             if (filter.sort == column.Key) {
-                header.className += ' datalist-' + filter.order.toLowerCase();
+                header.classList.add('datalist-' + filter.order.toLowerCase());
             }
 
+            header.innerText = column.Header || '';
             header.addEventListener('click', function () {
-                if (filter.sort == column.Key) {
-                    filter.order = filter.order == 'Asc' ? 'Desc' : 'Asc';
-                } else {
-                    filter.order = 'Asc';
-                }
-
+                filter.order = filter.sort == column.Key && filter.order == 'Asc' ? 'Desc' : 'Asc';
                 filter.sort = column.Key;
+
                 dialog.refresh();
             });
 
@@ -368,11 +360,11 @@ var MvcDatalistDialog = (function () {
         },
         rowsChanged: function () {
             var dialog = MvcDatalistDialog.prototype.current;
+            var rows = dialog.limitRows(this.value);
+            this.value = rows;
 
-            this.value = dialog.limitRows(this.value);
-
-            if (dialog.datalist.filter.rows != this.value) {
-                dialog.datalist.filter.rows = this.value;
+            if (dialog.datalist.filter.rows != rows) {
+                dialog.datalist.filter.rows = rows;
                 dialog.datalist.filter.page = 0;
 
                 dialog.refresh();
@@ -483,7 +475,7 @@ var MvcDatalistAutocomplete = (function () {
                         item.innerText = data[i].DatalistAcKey;
 
                         autocomplete.instance.appendChild(item);
-                        autocomplete.bind(item, data[i]);
+                        autocomplete.bind(item, [data[i]]);
                         autocomplete.items.push(item);
                     }
 
@@ -564,7 +556,7 @@ var MvcDatalistAutocomplete = (function () {
                 if (datalist.multi) {
                     datalist.select(datalist.selected.concat(data), true);
                 } else {
-                    datalist.select([data], true);
+                    datalist.select(data, true);
                 }
 
                 autocomplete.hide();
@@ -775,7 +767,7 @@ var MvcDatalist = (function () {
                 });
 
                 datalist.resizeSearch();
-            } else if (data.length > 0) {
+            } else if (data.length) {
                 datalist.values[0].value = data[0].DatalistIdKey;
                 datalist.search.value = data[0].DatalistAcKey;
             } else {
@@ -820,17 +812,17 @@ var MvcDatalist = (function () {
             var items = [];
 
             for (var i = 0; i < data.length; i++) {
-                var close = document.createElement('button');
-                close.className = 'datalist-deselect';
-                close.innerHTML = '×';
+                var button = document.createElement('button');
+                button.className = 'datalist-deselect';
+                button.innerText = '×';
 
                 var item = document.createElement('div');
                 item.innerText = data[i].DatalistAcKey || '';
                 item.className = 'datalist-item';
-                item.appendChild(close);
+                item.appendChild(button);
                 items.push(item);
 
-                this.bindDeselect(close, data[i].DatalistIdKey);
+                this.bindDeselect(button, data[i].DatalistIdKey);
             }
 
             return items;
@@ -881,7 +873,7 @@ var MvcDatalist = (function () {
             return -1;
         },
         resizeSearch: function () {
-            if (this.items.length > 0) {
+            if (this.items.length) {
                 var style = getComputedStyle(this.control);
                 var contentWidth = this.control.clientWidth;
                 var lastItem = this.items[this.items.length - 1];
@@ -928,7 +920,7 @@ var MvcDatalist = (function () {
             });
 
             datalist.search.addEventListener('keydown', function (e) {
-                if (e.which == 8 && this.value.length == 0 && datalist.selected.length > 0) {
+                if (e.which == 8 && !this.value.length && datalist.selected.length) {
                     datalist.select(datalist.selected.slice(0, -1), true);
                 } else if (e.which == 38) {
                     datalist.autocomplete.previous();
@@ -952,7 +944,7 @@ var MvcDatalist = (function () {
                 }
             });
             datalist.search.addEventListener('keyup', function (e) {
-                if (e.which != 9 && this.value.length == 0 && !datalist.multi && datalist.selected.length > 0) {
+                if (e.which != 9 && !this.value.length && !datalist.multi && datalist.selected.length) {
                     datalist.autocomplete.hide();
                     datalist.select([], true);
                 }
@@ -987,7 +979,7 @@ var MvcDatalist = (function () {
                             datalist.events.filterChange.apply(datalist, [e]);
                         }
 
-                        if (!e.defaultPrevented && datalist.selected.length > 0) {
+                        if (!e.defaultPrevented && datalist.selected.length) {
                             var rows = [];
                             var ids = [].filter.call(datalist.values, function (element) { return element.value; });
 
