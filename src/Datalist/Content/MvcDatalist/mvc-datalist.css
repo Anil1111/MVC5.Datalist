@@ -116,12 +116,9 @@
     overflow: hidden;
 }
 
-.datalist-open .datalist-overlay {
-    display: block;
-}
-
 .datalist-overlay {
     background: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
     padding: 50px 15px;
     overflow-x: auto;
     position: fixed;
@@ -420,7 +417,6 @@
     font-size: 1.1em;
     list-style: none;
     cursor: pointer;
-    display: none;
     z-index: 100;
     padding: 0;
 }

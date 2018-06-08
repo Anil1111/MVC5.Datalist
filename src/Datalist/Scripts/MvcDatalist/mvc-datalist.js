@@ -63,6 +63,7 @@ var MvcDatalistDialog = (function () {
         this.instance = document.getElementById(datalist.group.dataset.dialog);
         this.options = { preserveSearch: true, rows: { min: 1, max: 99 }, openDelay: 100 };
 
+        this.overlay = new MvcDatalistOverlay(this);
         this.table = this.instance.querySelector('table');
         this.tableHead = this.instance.querySelector('thead');
         this.tableBody = this.instance.querySelector('tbody');
@@ -110,19 +111,12 @@ var MvcDatalistDialog = (function () {
                     dialog.loader.style.display = '';
                 }
 
-                var rect = document.body.getBoundingClientRect();
-                if (rect.left + rect.right < window.innerWidth) {
-                    var paddingRight = parseFloat(getComputedStyle(document.body).paddingRight);
-                    document.body.style.paddingRight = (paddingRight + 17) + 'px';
-                }
-
-                document.body.classList.add('datalist-open');
+                dialog.overlay.show();
             }, dialog.options.openDelay);
         },
         close: function () {
-            document.body.classList.remove('datalist-open');
             var dialog = MvcDatalistDialog.prototype.current;
-            document.body.style.paddingRight = '';
+            dialog.overlay.hide();
 
             if (dialog.datalist.multi) {
                 dialog.datalist.select(dialog.selected, true);
@@ -409,9 +403,63 @@ var MvcDatalistDialog = (function () {
 
     return MvcDatalistDialog;
 }());
+var MvcDatalistOverlay = (function () {
+    function MvcDatalistOverlay(dialog) {
+        this.instance = this.getClosestOverlay(dialog.instance);
+        this.dialog = dialog;
+
+        this.bind();
+    }
+
+    MvcDatalistOverlay.prototype = {
+        getClosestOverlay: function (element) {
+            var overlay = element;
+            while (overlay.parentNode && !overlay.classList.contains('datalist-overlay')) {
+                overlay = overlay.parentNode;
+            }
+
+            if (overlay == document) {
+                throw new Error('Datalist dialog has to be inside a datalist-overlay.');
+            }
+
+            return overlay;
+        },
+
+        show: function () {
+            var body = document.body.getBoundingClientRect();
+            if (body.left + body.right < window.innerWidth) {
+                var paddingRight = parseFloat(getComputedStyle(document.body).paddingRight);
+                document.body.style.paddingRight = (paddingRight + 17) + 'px';
+            }
+
+            document.body.classList.add('datalist-open');
+            this.instance.style.display = 'block';
+        },
+        hide: function () {
+            document.body.classList.remove('datalist-open');
+            document.body.style.paddingRight = '';
+            this.instance.style.display = '';
+        },
+
+        bind: function () {
+            this.instance.removeEventListener('click', this.onClick);
+            this.instance.addEventListener('click', this.onClick);
+        },
+        onClick: function (e) {
+            var targetClasses = (e.target || e.srcElement).classList;
+
+            if (targetClasses.contains('datalist-overlay') || targetClasses.contains('datalist-wrapper')) {
+                MvcDatalistDialog.prototype.current.close();
+            }
+        }
+    };
+
+    return MvcDatalistOverlay;
+}());
 var MvcDatalistAutocomplete = (function () {
     function MvcDatalistAutocomplete(datalist) {
-        this.instance = document.querySelector('.datalist-autocomplete');
+        this.instance = document.createElement('ul');
+        this.instance.className = 'datalist-autocomplete';
         this.options = { minLength: 1, rows: 20 };
         this.activeItem = null;
         this.datalist = datalist;
@@ -499,11 +547,14 @@ var MvcDatalistAutocomplete = (function () {
             this.instance.style.left = (search.left + window.pageXOffset) + 'px';
             this.instance.style.top = (search.top + search.height + window.pageYOffset) + 'px';
 
-            this.instance.style.display = 'block';
+            document.body.appendChild(this.instance);
         },
         hide: function () {
             this.clear();
-            this.instance.style.display = '';
+
+            if (this.instance.parentNode) {
+                document.body.removeChild(this.instance);
+            }
         },
 
         bind: function (item, data) {
@@ -962,13 +1013,3 @@ var MvcDatalist = (function () {
 
     return MvcDatalist;
 }());
-
-window.addEventListener('load', function () {
-    document.querySelector('body > .datalist-overlay').addEventListener('click', function (e) {
-        var target = e.target || e.srcElement;
-
-        if (target.classList.contains('datalist-overlay')) {
-            MvcDatalistDialog.prototype.current.close();
-        }
-    });
-});
