@@ -383,6 +383,7 @@ var MvcDatalistDialog = (function () {
             var dialog = MvcDatalistDialog.prototype.current;
 
             this.value = dialog.limitRows(this.value);
+
             if (dialog.datalist.filter.rows != this.value) {
                 dialog.datalist.filter.rows = this.value;
                 dialog.datalist.filter.page = 0;
@@ -866,12 +867,12 @@ var MvcDatalist = (function () {
                 datalist.resizeSearch();
             });
 
-            datalist.group.addEventListener('focusin', function () {
-                this.classList.add('datalist-focus');
+            datalist.search.addEventListener('focusin', function () {
+                datalist.group.classList.add('datalist-focus');
             });
 
-            datalist.group.addEventListener('focusout', function () {
-                this.classList.remove('datalist-focus');
+            datalist.search.addEventListener('focusout', function () {
+                datalist.group.classList.remove('datalist-focus');
             });
 
             datalist.search.addEventListener('keydown', function (e) {
@@ -920,7 +921,9 @@ var MvcDatalist = (function () {
             });
 
             if (datalist.browser) {
-                datalist.browser.addEventListener('click', function () {
+                datalist.browser.addEventListener('click', function (e) {
+                    e.preventDefault();
+
                     datalist.browse();
                 });
             }

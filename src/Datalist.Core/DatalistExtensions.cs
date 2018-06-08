@@ -154,11 +154,12 @@ namespace Datalist
         }
         private static String CreateDatalistBrowser(String name)
         {
-            TagBuilder browser = new TagBuilder("div");
+            TagBuilder browser = new TagBuilder("a");
             browser.AddCssClass("datalist-browser");
             browser.Attributes["data-for"] = name;
+            browser.Attributes["href"] = "#";
 
-            TagBuilder icon = new TagBuilder("i");
+            TagBuilder icon = new TagBuilder("span");
             icon.AddCssClass("datalist-icon");
 
             browser.InnerHtml = icon.ToString();
