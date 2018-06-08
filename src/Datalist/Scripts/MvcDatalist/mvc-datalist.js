@@ -63,12 +63,12 @@ var MvcDatalistDialog = (function () {
         this.instance = document.getElementById(datalist.group.dataset.dialog);
         this.options = { preserveSearch: true, rows: { min: 1, max: 99 }, openDelay: 100 };
 
-        this.pager = this.instance.querySelector('ul');
         this.table = this.instance.querySelector('table');
         this.tableHead = this.instance.querySelector('thead');
         this.tableBody = this.instance.querySelector('tbody');
         this.rows = this.instance.querySelector('.datalist-rows');
         this.error = this.instance.querySelector('.datalist-error');
+        this.pager = this.instance.querySelector('.datalist-pager');
         this.header = this.instance.querySelector('.datalist-title');
         this.search = this.instance.querySelector('.datalist-search');
         this.selector = this.instance.querySelector('.datalist-selector');
@@ -596,7 +596,7 @@ var MvcDatalist = (function () {
             for (var i = 0; i < arguments.length; i++) {
                 for (var key in arguments[i]) {
                     if (arguments[i].hasOwnProperty(key)) {
-                        if (toString.call(options[key]) == '[object Object]') {
+                        if (Object.prototype.toString.call(options[key]) == '[object Object]') {
                             options[key] = this.extend(options[key], arguments[i][key]);
                         } else {
                             options[key] = arguments[i][key];

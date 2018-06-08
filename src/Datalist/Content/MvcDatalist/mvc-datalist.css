@@ -15,27 +15,12 @@
 
 .datalist-control {
     box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
+    border-radius: 4px 0 0 4px;
     padding: 2px 2.4em 2px 2px;
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    box-sizing: border-box;
     position: relative;
     flex: 1;
-}
-
-.datalist-input {
-    outline: none;
-    font: inherit;
-    padding: 2px;
-    border: none;
-    margin: 2px;
-    width: 100%;
-}
-
-.datalist-input::-ms-clear {
-    display: none;
 }
 
 .datalist-item {
@@ -63,8 +48,22 @@
     color: #000000;
 }
 
-.datalist-readonly .datalist-control,
-.datalist-readonly .datalist-control input {
+.datalist-input {
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    font: inherit;
+    padding: 2px;
+    border: none;
+    margin: 2px;
+    width: 100%;
+}
+
+.datalist-input::-ms-clear {
+    display: none;
+}
+
+.datalist-readonly .datalist-control {
     background: #eeeeee;
 }
 
@@ -81,8 +80,7 @@
 }
 
 .datalist-browser {
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
+    border-radius: 0 4px 4px 0;
     border: 1px solid #cccccc;
     background-color: #eeeeee;
     align-items: center;
@@ -112,28 +110,6 @@
     width: 3px;
     top: 0.6em;
     left: 45%;
-}
-
-.datalist-autocomplete {
-    border: 1px solid #d3d3d3;
-    background: #ffffff;
-    margin-bottom: 1rem;
-    position: absolute;
-    font-size: 1.1em;
-    list-style: none;
-    cursor: pointer;
-    display: none;
-    z-index: 100;
-    padding: 0;
-}
-
-.datalist-autocomplete li {
-    padding: 3px 1em 3px 0.4em;
-}
-
-.datalist-autocomplete li.active {
-    border: 1px solid #aaaaaa;
-    margin: -1px;
 }
 
 .datalist-open {
@@ -191,13 +167,10 @@
     transition: all 0.3s;
     font-weight: bold;
     background: none;
-    font-size: 1.7em;
+    font-size: 1.3em;
+    cursor: pointer;
     line-height: 1;
     border: none;
-}
-
-.datalist-close:focus {
-    outline: none;
 }
 
 .datalist-close:hover {
@@ -218,9 +191,9 @@
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
     border: 1px solid #dddddd;
-    line-height: 1.42857143;
-    box-sizing: border-box;
     padding: 6px 12px;
+    line-height: 1.5;
+    width: 100%;
     flex: 1;
 }
 
@@ -233,8 +206,6 @@
     border-top-right-radius: 4px;
     background-color: #eeeeee;
     border: 1px solid #dddddd;
-    line-height: 1.42857143;
-    box-sizing: border-box;
     text-align: center;
     border-left: none;
     padding: 6px 0;
@@ -252,6 +223,7 @@
     border-radius: 4px;
     margin-left: 10px;
     padding: 5px 8px;
+    cursor: pointer;
     min-width: 7em;
     color: #ffffff;
 }
@@ -325,52 +297,42 @@
     overflow-x: auto;
 }
 
-@keyframes datalist-spin {
-    0% {
-        transform: rotate(0);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.datalist-dialog table {
+.datalist-table table {
     border-collapse: collapse;
     border: none;
     width: 100%;
 }
 
-.datalist-dialog tbody tr:hover {
-    background-color: #ececec;
-}
-
-.datalist-dialog .selected {
-    background-color: #f5f5f5;
-}
-
-.datalist-dialog tr {
+.datalist-table tr {
     cursor: pointer;
 }
 
-.datalist-asc::after {
-    padding-left: 3px;
-    content: '\2193';
+.datalist-table tbody tr:hover {
+    background-color: #ececec;
 }
 
-.datalist-desc::after {
-    padding-left: 3px;
-    content: '\2191';
+.datalist-table .selected {
+    background-color: #f5f5f5;
 }
 
-.datalist-dialog th,
-.datalist-dialog td {
+.datalist-table th,
+.datalist-table td {
     border: 1px solid #dddddd;
     line-height: 1.42857143;
     padding: 0.3em 0.6em;
 }
 
-.datalist-split td {
+.datalist-table .datalist-asc::after {
+    padding-left: 3px;
+    content: '\2193';
+}
+
+.datalist-table .datalist-desc::after {
+    padding-left: 3px;
+    content: '\2191';
+}
+
+.datalist-table .datalist-split td {
     background-color: #ffffff;
     color: transparent;
     font-size: 0.4em;
@@ -378,55 +340,54 @@
     border: none;
 }
 
-.datalist-dialog td:last-child {
+.datalist-table td:last-child {
     box-sizing: border-box;
     text-align: center;
     font-weight: bold;
     width: 2.5em;
 }
 
-.datalist-dialog td:last-child::after {
+.datalist-table td:last-child::after {
     content: '\25CF';
 }
 
-.datalist-dialog .selected td:last-child::after {
+.datalist-table .selected td:last-child::after {
     content: '\2714';
     color: #5cb85c;
 }
 
-.datalist-dialog .datalist-empty {
+.datalist-table .datalist-empty {
     text-align: center;
     cursor: default;
 }
 
-.datalist-dialog .datalist-empty:hover {
+.datalist-table .datalist-empty:hover {
     background-color: inherit;
 }
 
-.datalist-dialog .datalist-empty td {
+.datalist-table .datalist-empty td {
     font-weight: normal;
 }
 
-.datalist-dialog .datalist-empty td::after {
+.datalist-table .datalist-empty td::after {
     content: '';
 }
 
-.datalist-dialog ul {
+.datalist-pager {
     margin: 0.8em 0 0 0;
     text-align: right;
     padding: 0;
 }
 
-.datalist-dialog ul li {
+.datalist-pager li {
     display: inline;
-    cursor: pointer;
 }
 
-.datalist-dialog ul li + li a {
+.datalist-pager li + li a {
     margin-left: 3px;
 }
 
-.datalist-dialog ul a {
+.datalist-pager a {
     border: 1px solid #dddddd;
     box-sizing: content-box;
     text-decoration: none;
@@ -437,16 +398,48 @@
     color: #777777;
 }
 
-.datalist-dialog ul a:focus,
-.datalist-dialog ul a:hover {
+.datalist-pager a:focus,
+.datalist-pager a:hover {
     background-color: #eeeeee;
     color: #777777;
 }
 
-.datalist-dialog .active a,
-.datalist-dialog .active a:focus,
-.datalist-dialog .active a:hover {
+.datalist-pager .active a,
+.datalist-pager .active a:focus,
+.datalist-pager .active a:hover {
     background-color: rgba(48, 74, 125, 0.76);
     border-color: rgba(30, 54, 101, 0.82);
     color: #ffffff;
+}
+
+.datalist-autocomplete {
+    border: 1px solid #d3d3d3;
+    background: #ffffff;
+    margin-bottom: 1rem;
+    position: absolute;
+    font-size: 1.1em;
+    list-style: none;
+    cursor: pointer;
+    display: none;
+    z-index: 100;
+    padding: 0;
+}
+
+.datalist-autocomplete li {
+    padding: 3px 1em 3px 0.4em;
+}
+
+.datalist-autocomplete li.active {
+    border: 1px solid #aaaaaa;
+    margin: -1px;
+}
+
+@keyframes datalist-spin {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
