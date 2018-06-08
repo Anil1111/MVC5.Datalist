@@ -195,9 +195,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"Test\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);
@@ -219,9 +219,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"Test\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);
@@ -244,9 +244,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"Test\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);
@@ -274,9 +274,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" readonly=\"readonly\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"ParentId\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"ParentId\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);
@@ -298,9 +298,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"ParentId\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"ParentId\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);
@@ -323,9 +323,9 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-input\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                     "</div>" +
-                    "<a class=\"datalist-browser\" data-for=\"Values\" href=\"#\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Values\">" +
                         "<span class=\"datalist-icon\"></span>" +
-                    "</a>" +
+                    "</button>" +
                 "</div>";
 
             Assert.Equal(expected, actual);

@@ -26,10 +26,11 @@
 .datalist-item {
     transition: background linear 0.3s;
     border: 1px solid #dddddd;
+    padding: 1px 1px 1px 6px;
     display: inline-block;
+    white-space: nowrap;
     background: #f8f8f8;
     border-radius: 3px;
-    padding: 1px 6px;
     color: #999999;
     margin: 2px;
 }
@@ -40,8 +41,13 @@
 }
 
 .datalist-deselect {
-    margin-left: 6px;
+    transition: all 0.5s;
+    margin-left: 1px;
+    background: none;
     cursor: pointer;
+    padding: 0 5px;
+    color: #999999;
+    border: none;
 }
 
 .datalist-deselect:hover {
@@ -49,7 +55,9 @@
 }
 
 .datalist-input {
+    height: calc(4px + 1.5em);
     box-sizing: border-box;
+    line-height: normal;
     background: none;
     outline: none;
     font: inherit;
@@ -83,11 +91,9 @@
     border-radius: 0 4px 4px 0;
     border: 1px solid #cccccc;
     background-color: #eeeeee;
-    align-items: center;
     padding: 0 12px;
+    cursor: pointer;
     border-left: 0;
-    color: inherit;
-    display: flex;
 }
 
 .datalist-icon {
@@ -96,6 +102,7 @@
     margin: 0 2px 2px 0;
     border-radius: 50%;
     border: 2px solid;
+    display: block;
     height: 0.8em;
     width: 0.8em;
 }
@@ -371,42 +378,37 @@
 }
 
 .datalist-pager {
-    margin: 0.8em 0 0 0;
+    margin-top: 0.8em;
     text-align: right;
-    padding: 0;
 }
 
-.datalist-pager li {
-    display: inline;
-}
-
-.datalist-pager li + li a {
+.datalist-pager button + button {
     margin-left: 3px;
 }
 
-.datalist-pager a {
+.datalist-pager button {
     border: 1px solid #dddddd;
-    box-sizing: content-box;
-    text-decoration: none;
-    display: inline-block;
+    box-sizing: border-box;
     padding: 0.4em 0.6em;
-    text-align: center;
-    min-width: 1.1em;
+    background: none;
+    min-width: 2.6em;
+    cursor: pointer;
     color: #777777;
 }
 
-.datalist-pager a:focus,
-.datalist-pager a:hover {
+.datalist-pager button:focus,
+.datalist-pager button:hover {
     background-color: #eeeeee;
     color: #777777;
 }
 
-.datalist-pager .active a,
-.datalist-pager .active a:focus,
-.datalist-pager .active a:hover {
+.datalist-pager .active,
+.datalist-pager .active:focus,
+.datalist-pager .active:hover {
     background-color: rgba(48, 74, 125, 0.76);
     border-color: rgba(30, 54, 101, 0.82);
     color: #ffffff;
+    cursor: default;
 }
 
 .datalist-autocomplete {
