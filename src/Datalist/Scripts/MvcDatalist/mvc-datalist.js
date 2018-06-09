@@ -22,8 +22,10 @@ var MvcDatalistFilter = (function () {
 
     MvcDatalistFilter.prototype = {
         formUrl: function (search) {
+            var url = this.datalist.url.split('?')[0];
+            var urlQuery = this.datalist.url.split('?')[1];
             var filter = this.datalist.extend({ ids: [], checkIds: [], selected: [] }, this, search);
-            var query = '?search=' + encodeURIComponent(filter.search);
+            var query = '?' + (urlQuery ? urlQuery + '&' : '') + 'search=' + encodeURIComponent(filter.search);
 
             for (var i = 0; i < this.additionalFilters.length; i++) {
                 var filters = document.querySelectorAll('[name="' + this.additionalFilters[i] + '"]');
@@ -50,7 +52,7 @@ var MvcDatalistFilter = (function () {
                 '&page=' + encodeURIComponent(filter.page) +
                 '&_=' + Date.now();
 
-            return this.datalist.url + query;
+            return url + query;
         }
     };
 
