@@ -552,9 +552,7 @@ var MvcDatalistAutocomplete = (function () {
                 e.preventDefault();
             });
 
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-
+            item.addEventListener('click', function () {
                 if (datalist.multi) {
                     datalist.select(datalist.selected.concat(data), true);
                 } else {
@@ -913,48 +911,13 @@ var MvcDatalist = (function () {
                 datalist.resizeSearch();
             });
 
-            datalist.search.addEventListener('focusin', function () {
+            datalist.search.addEventListener('focus', function () {
                 datalist.group.classList.add('datalist-focus');
             });
 
-            datalist.search.addEventListener('focusout', function () {
-                datalist.group.classList.remove('datalist-focus');
-            });
-
-            datalist.search.addEventListener('keydown', function (e) {
-                if (e.which == 8 && !this.value.length && datalist.selected.length) {
-                    datalist.select(datalist.selected.slice(0, -1), true);
-                } else if (e.which == 38) {
-                    datalist.autocomplete.previous();
-
-                    e.preventDefault();
-                } else if (e.which == 40) {
-                    datalist.autocomplete.next();
-
-                    e.preventDefault();
-                } else if (e.which == 13 && datalist.autocomplete.activeItem) {
-                    if (typeof (Event) === 'function') {
-                        var click = new Event('click');
-                    } else {
-                        var click = document.createEvent('Event');
-                        click.initEvent('click', true, true);
-                    }
-
-                    datalist.autocomplete.activeItem.dispatchEvent(click);
-
-                    e.preventDefault();
-                }
-            });
-            datalist.search.addEventListener('keyup', function (e) {
-                if (e.which != 9 && !this.value.length && !datalist.multi && datalist.selected.length) {
-                    datalist.autocomplete.hide();
-                    datalist.select([], true);
-                }
-            });
-            datalist.search.addEventListener('input', function (e) {
-                datalist.autocomplete.search(this.value);
-            });
             datalist.search.addEventListener('blur', function () {
+                datalist.group.classList.remove('datalist-focus');
+
                 if (!datalist.multi && datalist.selected.length) {
                     this.value = datalist.selected[0].DatalistAcKey;
                 } else {
@@ -964,10 +927,39 @@ var MvcDatalist = (function () {
                 datalist.autocomplete.hide();
             });
 
-            if (datalist.browser) {
-                datalist.browser.addEventListener('click', function (e) {
+            datalist.search.addEventListener('keydown', function (e) {
+                if (e.which == 8 && !this.value.length && datalist.selected.length) {
+                    datalist.select(datalist.selected.slice(0, -1), true);
+                } else if (e.which == 38) {
                     e.preventDefault();
 
+                    datalist.autocomplete.previous();
+                } else if (e.which == 40) {
+                    e.preventDefault();
+
+                    datalist.autocomplete.next();
+                } else if (e.which == 13 && datalist.autocomplete.activeItem) {
+                    if (typeof (Event) === 'function') {
+                        var click = new Event('click');
+                    } else {
+                        var click = document.createEvent('Event');
+                        click.initEvent('click', true, true);
+                    }
+
+                    datalist.autocomplete.activeItem.dispatchEvent(click);
+                }
+            });
+            datalist.search.addEventListener('input', function (e) {
+                if (!this.value.length && !datalist.multi && datalist.selected.length) {
+                    datalist.autocomplete.hide();
+                    datalist.select([], true);
+                }
+
+                datalist.autocomplete.search(this.value);
+            });
+
+            if (datalist.browser) {
+                datalist.browser.addEventListener('click', function () {
                     datalist.browse();
                 });
             }
