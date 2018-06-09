@@ -70,23 +70,16 @@ var MvcDatalistDialog = (function () {
         this.tableHead = this.instance.querySelector('thead');
         this.tableBody = this.instance.querySelector('tbody');
         this.rows = this.instance.querySelector('.datalist-rows');
-        this.error = this.instance.querySelector('.datalist-error');
         this.pager = this.instance.querySelector('.datalist-pager');
         this.header = this.instance.querySelector('.datalist-title');
         this.search = this.instance.querySelector('.datalist-search');
         this.selector = this.instance.querySelector('.datalist-selector');
         this.closeButton = this.instance.querySelector('.datalist-close');
+        this.error = this.instance.querySelector('.datalist-dialog-error');
         this.loader = this.instance.querySelector('.datalist-dialog-loader');
     }
 
     MvcDatalistDialog.prototype = {
-        lang: {
-            search: 'Search...',
-            select: 'Select ({0})',
-            noData: 'No data found',
-            error: 'Error while retrieving records'
-        },
-
         open: function () {
             var dialog = this;
             var filter = dialog.datalist.filter;
@@ -95,13 +88,13 @@ var MvcDatalistDialog = (function () {
             dialog.error.style.display = 'none';
             dialog.loader.style.display = 'none';
             dialog.header.innerText = dialog.title;
-            dialog.error.innerHTML = dialog.lang['error'];
             dialog.selected = dialog.datalist.selected.slice();
             dialog.rows.value = dialog.limitRows(filter.rows);
-            dialog.search.setAttribute('placeholder', dialog.lang['search']);
+            dialog.error.innerHTML = dialog.datalist.lang['error'];
             filter.search = dialog.options.preserveSearch ? filter.search : '';
             dialog.selector.style.display = dialog.datalist.multi ? '' : 'none';
-            dialog.selector.innerText = dialog.lang['select'].replace('{0}', dialog.datalist.selected.length);
+            dialog.search.setAttribute('placeholder', dialog.datalist.lang['search']);
+            dialog.selector.innerText = dialog.datalist.lang['select'].replace('{0}', dialog.datalist.selected.length);
 
             dialog.bind();
             dialog.refresh();
@@ -118,6 +111,8 @@ var MvcDatalistDialog = (function () {
         },
         close: function () {
             var dialog = MvcDatalistDialog.prototype.current;
+            dialog.datalist.group.classList.remove('mvc-lookup-error');
+
             dialog.overlay.hide();
 
             if (dialog.datalist.multi) {
@@ -186,7 +181,7 @@ var MvcDatalistDialog = (function () {
                 var row = document.createElement('tr');
 
                 empty.setAttribute('colspan', columns.length + 1);
-                empty.innerHTML = this.lang['noData'];
+                empty.innerHTML = this.datalist.lang['noData'];
                 row.className = 'datalist-empty';
 
                 this.tableBody.appendChild(row);
@@ -330,7 +325,7 @@ var MvcDatalistDialog = (function () {
                 }
 
                 if (datalist.multi) {
-                    dialog.selector.innerText = dialog.lang['select'].replace('{0}', dialog.selected.length);
+                    dialog.selector.innerText = dialog.datalist.lang['select'].replace('{0}', dialog.selected.length);
                 } else {
                     datalist.select(dialog.selected, true);
 
@@ -596,6 +591,7 @@ var MvcDatalist = (function () {
         this.search = group.querySelector('.datalist-input');
         this.browser = group.querySelector('.datalist-browser');
         this.control = group.querySelector('.datalist-control');
+        this.error = group.querySelector('.datalist-control-error');
         this.valueContainer = group.querySelector('.datalist-values');
         this.values = this.valueContainer.querySelectorAll('.datalist-value');
 
@@ -612,6 +608,12 @@ var MvcDatalist = (function () {
 
     MvcDatalist.prototype = {
         instances: [],
+        lang: {
+            search: 'Search...',
+            select: 'Select ({0})',
+            noData: 'No data found',
+            error: 'Error while retrieving records'
+        },
 
         closestGroup: function (element) {
             var datalist = element;
@@ -676,6 +678,7 @@ var MvcDatalist = (function () {
         load: function (search, success, error) {
             var datalist = this;
             datalist.startLoading();
+            datalist.group.classList.remove('datalist-error');
 
             var request = new XMLHttpRequest();
             request.open('GET', datalist.filter.formUrl(search), true);
@@ -691,6 +694,8 @@ var MvcDatalist = (function () {
             };
 
             request.onerror = function () {
+                datalist.error.setAttribute('title', datalist.lang.error);
+                datalist.group.classList.add('datalist-error');
                 datalist.stopLoading();
 
                 if (error) {
@@ -847,12 +852,12 @@ var MvcDatalist = (function () {
             this.stopLoading();
 
             this.loading = setTimeout(function (datalist) {
-                datalist.search.classList.add('datalist-loading');
+                datalist.group.classList.add('datalist-loading');
             }, this.options.loadingDelay, this);
         },
         stopLoading: function () {
             clearTimeout(this.loading);
-            this.search.classList.remove('datalist-loading');
+            this.group.classList.remove('datalist-loading');
         },
 
         bindDeselect: function (close, id) {

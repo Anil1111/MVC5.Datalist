@@ -71,7 +71,6 @@
 .datalist-control-loader {
     animation: datalist-spin 1s infinite linear;
     border: 0.125rem solid rgba(0, 0, 0, 0.2);
-    transition: opacity 0.3s linear;
     border-top-color: #444444;
     box-sizing: border-box;
     border-radius: 50%;
@@ -81,12 +80,31 @@
     height: 1rem;
     top: 0.65rem;
     width: 1rem;
+}
+
+.datalist-control-error {
+    border: 0.0625rem solid rgba(255, 0, 0, 0.5);
+    transition: opacity 0.3s linear;
+    color: rgba(255, 0, 0, 0.5);
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    position: absolute;
+    font-size: 0.9rem;
+    cursor: default;
+    height: 1.5rem;
+    right: 0.4rem;
+    width: 1.5rem;
+    top: 0.4rem;
     opacity: 0;
 }
 
-.datalist-loading + .datalist-control-loader {
-    transition: opacity 1.5s linear;
+.datalist-loading .datalist-control-loader {
     display: block;
+}
+
+.datalist-error .datalist-control-error {
     opacity: 1;
 }
 
@@ -263,7 +281,7 @@
     position: relative;
 }
 
-.datalist-error,
+.datalist-dialog-error,
 .datalist-dialog-loader {
     border: 1px solid #dddddd;
     transition: opacity 0.3s;
@@ -290,7 +308,7 @@
     width: 5rem;
 }
 
-.datalist-error {
+.datalist-dialog-error {
     border-color: #ebccd1;
     background: #fff6f6;
     color: #a94442;

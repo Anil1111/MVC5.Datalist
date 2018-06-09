@@ -139,16 +139,20 @@ namespace Datalist
             TagBuilder search = new TagBuilder("input");
             TagBuilder control = new TagBuilder("div");
             TagBuilder loader = new TagBuilder("div");
+            TagBuilder error = new TagBuilder("div");
 
             if (datalist.ReadOnly) search.Attributes["readonly"] = "readonly";
             loader.AddCssClass("datalist-control-loader");
+            error.AddCssClass("datalist-control-error");
             search.Attributes["autocomplete"] = "off";
             control.AddCssClass("datalist-control");
             control.Attributes["data-for"] = name;
             search.AddCssClass("datalist-input");
+            error.InnerHtml = "!";
 
             control.InnerHtml = search.ToString(TagRenderMode.SelfClosing);
             control.InnerHtml += loader.ToString();
+            control.InnerHtml += error.ToString();
 
             return control.ToString();
         }
