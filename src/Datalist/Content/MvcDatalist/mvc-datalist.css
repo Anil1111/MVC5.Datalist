@@ -16,8 +16,8 @@
 .datalist-control {
     padding: 0.125rem 2rem 0.125rem 0.125rem;
     border-radius: 0.25rem 0 0 0.25rem;
-    background-color: #ffffff;
     border: 1px solid #ced4da;
+    background: #ffffff;
     position: relative;
     flex: 1;
 }
@@ -93,8 +93,8 @@
 .datalist-browser {
     border-radius: 0 0.25rem 0.25rem 0;
     border: 1px solid #ced4da;
-    background-color: #e9ecef;
     padding: 0.375rem 0.75rem;
+    background: #e9ecef;
     cursor: pointer;
     border-left: 0;
     color: #495057;
@@ -178,14 +178,14 @@
     border-radius: 0.25rem 0.25rem 0 0;
     padding: 0.4rem 0.6rem 0.4rem 1rem;
     color: rgba(255, 255, 255, 0.8);
-    background-color: #62759c;
+    background: #62759c;
     border-bottom: none;
     font-weight: bold;
     display: flex;
 }
 
 .datalist-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     flex: 1;
 }
 
@@ -193,7 +193,7 @@
     color: rgba(255, 255, 255, 0.8);
     transition: all 0.3s;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     background: none;
     cursor: pointer;
     line-height: 1;
@@ -230,8 +230,8 @@
 
 .datalist-rows {
     border-radius: 0 0.25rem 0.25rem 0;
-    background-color: #e9ecef;
     border: 1px solid #ced4da;
+    background: #e9ecef;
     text-align: center;
     border-left: none;
     width: 3.5rem;
@@ -242,7 +242,7 @@
 }
 
 .datalist-selector {
-    background-color: rgba(78, 169, 86, 0.8);
+    background: rgba(78, 169, 86, 0.8);
     color: rgba(255, 255, 255, 0.9);
     border: 1px solid #5c9845;
     border-radius: 0.25rem;
@@ -259,16 +259,16 @@
 
 .datalist-content {
     margin-top: 0.75rem;
-    min-height: 7.3rem;
+    min-height: 6.9rem;
     position: relative;
 }
 
 .datalist-error,
 .datalist-dialog-loader {
-    background-color: #ffffff;
     border: 1px solid #dddddd;
     transition: opacity 0.3s;
     justify-content: center;
+    background: #ffffff;
     align-items: center;
     position: absolute;
     display: flex;
@@ -291,8 +291,8 @@
 }
 
 .datalist-error {
-    background-color: #fff6f6;
     border-color: #ebccd1;
+    background: #fff6f6;
     color: #a94442;
 }
 
@@ -311,11 +311,11 @@
 }
 
 .datalist-table tbody tr:hover {
-    background-color: #ececec;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .datalist-table .selected {
-    background-color: #f5f5f5;
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .datalist-table th,
@@ -365,7 +365,7 @@
 }
 
 .datalist-table .datalist-empty:hover {
-    background-color: inherit;
+    background: inherit;
 }
 
 .datalist-table .datalist-empty td {
@@ -398,14 +398,14 @@
 
 .datalist-pager button:focus,
 .datalist-pager button:hover {
-    background-color: #eeeeee;
+    background: #eeeeee;
 }
 
 .datalist-pager .active,
 .datalist-pager .active:focus,
 .datalist-pager .active:hover {
     border-color: rgba(30, 54, 101, 0.8);
-    background-color: #62759c;
+    background: #62759c;
     color: #ffffff;
     cursor: default;
 }
