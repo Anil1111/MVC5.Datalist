@@ -336,6 +336,7 @@
 }
 
 .datalist-table .datalist-split td {
+    background: #ffffff;
     color: transparent;
     font-size: 0.4rem;
     cursor: default;
