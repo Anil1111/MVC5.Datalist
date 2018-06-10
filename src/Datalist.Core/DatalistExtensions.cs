@@ -143,6 +143,7 @@ namespace Datalist
             TagBuilder error = new TagBuilder("div");
 
             if (datalist.Name != null) attributes["id"] = ExpressionHelper.GetExpressionText(datalist.Name);
+            if (datalist.Placeholder != null) attributes["placeholder"] = datalist.Placeholder;
             if (datalist.Name != null) attributes["name"] = datalist.Name;
             if (datalist.ReadOnly) attributes["readonly"] = "readonly";
             attributes["class"] = "datalist-input";

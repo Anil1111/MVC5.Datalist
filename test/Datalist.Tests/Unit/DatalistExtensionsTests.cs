@@ -22,6 +22,7 @@ namespace Datalist.Tests.Unit
             datalist.Dialog = "Dialog";
             datalist.Name = "DatalistName";
             datalist.Filter.Sort = "First";
+            datalist.Placeholder = "Search";
             datalist.Filter.Search = "Test";
             datalist.AdditionalFilters.Clear();
             datalist.AdditionalFilters.Add("Add1");
@@ -48,7 +49,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -70,7 +71,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -95,7 +96,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"Value2\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -123,7 +124,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -145,7 +146,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -171,7 +172,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Values\" name=\"Values\" type=\"hidden\" value=\"Value2&#39;s\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Values\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -199,7 +200,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -224,7 +225,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"Test\" name=\"Test\" type=\"hidden\" value=\"1\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -250,7 +251,7 @@ namespace Datalist.Tests.Unit
                     "<div class=\"datalist-values\" data-for=\"Test\">" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Test\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -281,7 +282,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" readonly=\"readonly\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -306,7 +307,7 @@ namespace Datalist.Tests.Unit
                         "<input autocomplete=\"off\" class=\"datalist-value\" id=\"ParentId\" name=\"ParentId\" type=\"hidden\" value=\"Model&#39;s parent ID\" />" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"ParentId\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
@@ -332,7 +333,7 @@ namespace Datalist.Tests.Unit
                     "<div class=\"datalist-values\" data-for=\"Values\">" +
                     "</div>" +
                     "<div class=\"datalist-control\" data-for=\"Values\">" +
-                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" type=\"text\" value=\"\" />" +
+                        "<input autocomplete=\"off\" class=\"datalist-input\" id=\"DatalistName\" name=\"DatalistName\" placeholder=\"Search\" type=\"text\" value=\"\" />" +
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
