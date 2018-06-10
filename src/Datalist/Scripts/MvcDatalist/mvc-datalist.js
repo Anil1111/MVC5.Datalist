@@ -252,6 +252,7 @@ var MvcDatalistDialog = (function () {
         renderPage: function (text, value) {
             var page = document.createElement('button');
             var filter = this.datalist.filter;
+            page.type = 'button';
             var dialog = this;
 
             if (filter.page == value) {
@@ -825,6 +826,7 @@ var MvcDatalist = (function () {
                 var button = document.createElement('button');
                 button.className = 'datalist-deselect';
                 button.innerText = '×';
+                button.type = 'button';
 
                 var item = document.createElement('div');
                 item.innerText = data[i].DatalistAcKey || '';

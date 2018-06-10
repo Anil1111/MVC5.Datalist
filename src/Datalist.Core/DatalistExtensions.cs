@@ -171,6 +171,7 @@ namespace Datalist
             TagBuilder browser = new TagBuilder("button");
             browser.AddCssClass("datalist-browser");
             browser.Attributes["data-for"] = name;
+            browser.Attributes["type"] = "button";
 
             TagBuilder icon = new TagBuilder("span");
             icon.AddCssClass("datalist-icon");

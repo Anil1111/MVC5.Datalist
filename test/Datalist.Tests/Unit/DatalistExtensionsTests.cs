@@ -203,7 +203,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
@@ -228,7 +228,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
@@ -254,7 +254,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"Test\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Test\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
@@ -285,7 +285,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"ParentId\">" +
+                    "<button class=\"datalist-browser\" data-for=\"ParentId\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
@@ -310,7 +310,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"ParentId\">" +
+                    "<button class=\"datalist-browser\" data-for=\"ParentId\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
@@ -336,7 +336,7 @@ namespace Datalist.Tests.Unit
                         "<div class=\"datalist-control-loader\"></div>" +
                         "<div class=\"datalist-control-error\">!</div>" +
                     "</div>" +
-                    "<button class=\"datalist-browser\" data-for=\"Values\">" +
+                    "<button class=\"datalist-browser\" data-for=\"Values\" type=\"button\">" +
                         "<span class=\"datalist-icon\"></span>" +
                     "</button>" +
                 "</div>";
