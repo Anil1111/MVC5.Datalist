@@ -10,6 +10,7 @@ namespace Datalist
         public const String AcKey = "DatalistAcKey";
 
         public String Url { get; set; }
+        public String Name { get; set; }
         public String Title { get; set; }
         public String Dialog { get; set; }
         public Boolean Multi { get; set; }

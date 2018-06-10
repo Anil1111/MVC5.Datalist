@@ -19,7 +19,7 @@ namespace Datalist
             datalist.AddCssClass("datalist-browseless");
 
             datalist.InnerHtml = CreateDatalistValues(html, model, name, value);
-            datalist.InnerHtml += CreateDatalistControl(model, name);
+            datalist.InnerHtml += CreateDatalistControl(html, model, name);
 
             return new MvcHtmlString(datalist.ToString());
         }
@@ -31,7 +31,7 @@ namespace Datalist
             datalist.AddCssClass("datalist-browseless");
 
             datalist.InnerHtml = CreateDatalistValues(html, model, expression);
-            datalist.InnerHtml += CreateDatalistControl(model, name);
+            datalist.InnerHtml += CreateDatalistControl(html, model, name);
 
             return new MvcHtmlString(datalist.ToString());
         }
@@ -42,7 +42,7 @@ namespace Datalist
             TagBuilder datalist = CreateDatalist(model, name, htmlAttributes);
 
             datalist.InnerHtml = CreateDatalistValues(html, model, name, value);
-            datalist.InnerHtml += CreateDatalistControl(model, name);
+            datalist.InnerHtml += CreateDatalistControl(html, model, name);
             datalist.InnerHtml += CreateDatalistBrowser(name);
 
             return new MvcHtmlString(datalist.ToString());
@@ -54,7 +54,7 @@ namespace Datalist
             TagBuilder datalist = CreateDatalist(model, name, htmlAttributes);
 
             datalist.InnerHtml = CreateDatalistValues(html, model, expression);
-            datalist.InnerHtml += CreateDatalistControl(model, name);
+            datalist.InnerHtml += CreateDatalistControl(html, model, name);
             datalist.InnerHtml += CreateDatalistBrowser(name);
 
             return new MvcHtmlString(datalist.ToString());
@@ -134,23 +134,33 @@ namespace Datalist
 
             return container.ToString();
         }
-        private static String CreateDatalistControl(MvcDatalist datalist, String name)
+        private static String CreateDatalistControl(HtmlHelper html, MvcDatalist datalist, String name)
         {
+            Dictionary<String, Object> attributes = new Dictionary<String, Object>();
             TagBuilder search = new TagBuilder("input");
             TagBuilder control = new TagBuilder("div");
             TagBuilder loader = new TagBuilder("div");
             TagBuilder error = new TagBuilder("div");
 
+            if (datalist.Name != null) attributes["id"] = ExpressionHelper.GetExpressionText(datalist.Name);
+            if (datalist.Name != null) attributes["name"] = datalist.Name;
+            if (datalist.ReadOnly) attributes["readonly"] = "readonly";
+            attributes["class"] = "datalist-input";
+            attributes["autocomplete"] = "off";
+
             if (datalist.ReadOnly) search.Attributes["readonly"] = "readonly";
             loader.AddCssClass("datalist-control-loader");
             error.AddCssClass("datalist-control-error");
-            search.Attributes["autocomplete"] = "off";
             control.AddCssClass("datalist-control");
             control.Attributes["data-for"] = name;
-            search.AddCssClass("datalist-input");
+            search.MergeAttributes(attributes);
             error.InnerHtml = "!";
 
-            control.InnerHtml = search.ToString(TagRenderMode.SelfClosing);
+            if (datalist.Name != null)
+                control.InnerHtml = html.TextBox(datalist.Name, null, attributes).ToString();
+            else
+                control.InnerHtml = search.ToString(TagRenderMode.SelfClosing);
+
             control.InnerHtml += loader.ToString();
             control.InnerHtml += error.ToString();
 

@@ -111,7 +111,7 @@ var MvcDatalistDialog = (function () {
         },
         close: function () {
             var dialog = MvcDatalistDialog.prototype.current;
-            dialog.datalist.group.classList.remove('mvc-lookup-error');
+            dialog.datalist.group.classList.remove('datalist-error');
 
             dialog.overlay.hide();
 
@@ -714,6 +714,7 @@ var MvcDatalist = (function () {
         reload: function (triggerChanges) {
             var rows = [];
             var datalist = this;
+            var originalValue = datalist.search.value;
             var ids = [].filter.call(datalist.values, function (element) { return element.value; });
 
             if (ids.length) {
@@ -729,6 +730,10 @@ var MvcDatalist = (function () {
                 });
             } else {
                 datalist.select(rows, triggerChanges);
+
+                if (!datalist.multi && datalist.search.getAttribute('name')) {
+                    datalist.search.value = originalValue;
+                }
             }
         },
         select: function (data, triggerChanges) {
@@ -923,10 +928,17 @@ var MvcDatalist = (function () {
             datalist.search.addEventListener('blur', function () {
                 datalist.group.classList.remove('datalist-focus');
 
+                var originalValue = this.value;
                 if (!datalist.multi && datalist.selected.length) {
-                    this.value = datalist.selected[0].DatalistAcKey;
+                    if (datalist.selected[0].DatalistAcKey != this.value) {
+                        datalist.select([], true);
+                    }
                 } else {
                     this.value = '';
+                }
+
+                if (!datalist.multi && datalist.search.getAttribute('name')) {
+                    this.value = originalValue;
                 }
 
                 datalist.autocomplete.hide();
