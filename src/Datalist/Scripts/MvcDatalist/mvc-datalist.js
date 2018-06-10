@@ -101,7 +101,7 @@ var MvcDatalistDialog = (function () {
             dialog.search.value = filter.search;
 
             setTimeout(function () {
-                if (dialog.loading) {
+                if (dialog.isLoading) {
                     dialog.loader.style.opacity = 1;
                     dialog.loader.style.display = '';
                 }
@@ -113,6 +113,7 @@ var MvcDatalistDialog = (function () {
             var dialog = MvcDatalistDialog.prototype.current;
             dialog.datalist.group.classList.remove('datalist-error');
 
+            dialog.datalist.stopLoading();
             dialog.overlay.hide();
 
             if (dialog.datalist.multi) {
@@ -124,7 +125,7 @@ var MvcDatalistDialog = (function () {
         },
         refresh: function () {
             var dialog = this;
-            dialog.loading = true;
+            dialog.isLoading = true;
             dialog.error.style.opacity = 0;
             dialog.error.style.display = '';
             dialog.loader.style.display = '';
@@ -132,12 +133,12 @@ var MvcDatalistDialog = (function () {
                 dialog.loader.style.opacity = 1;
             }, dialog.datalist.options.loadingDelay);
 
-            dialog.datalist.load({ selected: dialog.selected }, function (data) {
-                dialog.loading = false;
+            dialog.datalist.startLoading({ selected: dialog.selected }, function (data) {
+                dialog.isLoading = false;
                 clearTimeout(loading);
                 dialog.render(data);
             }, function () {
-                dialog.loading = false;
+                dialog.isLoading = false;
                 clearTimeout(loading);
                 dialog.render();
             });
@@ -372,6 +373,7 @@ var MvcDatalistDialog = (function () {
             var input = this;
             var dialog = MvcDatalistDialog.prototype.current;
 
+            dialog.datalist.stopLoading();
             clearTimeout(dialog.searching);
             dialog.searching = setTimeout(function () {
                 if (dialog.datalist.filter.search != input.value || e.keyCode == 13) {
@@ -454,13 +456,16 @@ var MvcDatalistAutocomplete = (function () {
             var autocomplete = this;
             var datalist = autocomplete.datalist;
 
+            datalist.stopLoading();
             clearTimeout(autocomplete.searching);
             autocomplete.searching = setTimeout(function () {
                 if (term.length < autocomplete.options.minLength || datalist.readonly) {
+                    autocomplete.hide();
+
                     return;
                 }
 
-                datalist.load({ search: term, rows: autocomplete.options.rows }, function (data) {
+                datalist.startLoading({ search: term, rows: autocomplete.options.rows }, function (data) {
                     autocomplete.clear();
 
                     data = data.Rows.filter(function (row) {
@@ -555,6 +560,7 @@ var MvcDatalistAutocomplete = (function () {
                     datalist.select(data, true);
                 }
 
+                datalist.stopLoading();
                 autocomplete.hide();
             });
 
@@ -676,37 +682,6 @@ var MvcDatalist = (function () {
             this.resizeSearch();
         },
 
-        load: function (search, success, error) {
-            var datalist = this;
-            datalist.startLoading();
-            datalist.group.classList.remove('datalist-error');
-
-            var request = new XMLHttpRequest();
-            request.open('GET', datalist.filter.formUrl(search), true);
-
-            request.onload = function () {
-                datalist.stopLoading();
-
-                if (200 <= request.status && request.status < 400) {
-                    success(JSON.parse(request.responseText))
-                } else {
-                    request.onerror();
-                }
-            };
-
-            request.onerror = function () {
-                datalist.error.setAttribute('title', datalist.lang.error);
-                datalist.group.classList.add('datalist-error');
-                datalist.stopLoading();
-
-                if (error) {
-                    error();
-                }
-            };
-
-            request.send();
-        },
-
         browse: function () {
             if (!this.readonly) {
                 this.dialog.open();
@@ -719,7 +694,7 @@ var MvcDatalist = (function () {
             var ids = [].filter.call(datalist.values, function (element) { return element.value; });
 
             if (ids.length) {
-                datalist.load({ ids: ids, rows: ids.length }, function (data) {
+                datalist.startLoading({ ids: ids, rows: ids.length }, function (data) {
                     for (var i = 0; i < ids.length; i++) {
                         var index = datalist.indexOf(data.Rows, ids[i].value);
                         if (index >= 0) {
@@ -730,6 +705,7 @@ var MvcDatalist = (function () {
                     datalist.select(rows, triggerChanges);
                 });
             } else {
+                datalist.stopLoading();
                 datalist.select(rows, triggerChanges);
 
                 if (!datalist.multi && datalist.search.getAttribute('name')) {
@@ -803,14 +779,14 @@ var MvcDatalist = (function () {
         selectFirst: function (triggerChanges) {
             var datalist = this;
 
-            datalist.load({ rows: 1 }, function (data) {
+            datalist.startLoading({ rows: 1 }, function (data) {
                 datalist.select(data.Rows, triggerChanges);
             });
         },
         selectSingle: function (triggerChanges) {
             var datalist = this;
 
-            datalist.load({ rows: 2 }, function (data) {
+            datalist.startLoading({ rows: 2 }, function (data) {
                 if (data.Rows.length == 1) {
                     datalist.select(data.Rows, triggerChanges);
                 } else {
@@ -855,14 +831,45 @@ var MvcDatalist = (function () {
             return inputs;
         },
 
-        startLoading: function () {
-            this.stopLoading();
+        startLoading: function (search, success, error) {
+            var datalist = this;
 
-            this.loading = setTimeout(function (datalist) {
+            datalist.stopLoading();
+            datalist.loading = setTimeout(function () {//todoz
                 datalist.group.classList.add('datalist-loading');
-            }, this.options.loadingDelay, this);
+            }, datalist.options.loadingDelay);
+            datalist.group.classList.remove('datalist-error');
+
+            datalist.request = new XMLHttpRequest();
+            datalist.request.open('GET', datalist.filter.formUrl(search), true);
+
+            datalist.request.onload = function () {
+                if (200 <= datalist.request.status && datalist.request.status < 400) {
+                    datalist.stopLoading();
+
+                    success(JSON.parse(datalist.request.responseText))
+                } else {
+                    datalist.request.onerror();
+                }
+            };
+
+            datalist.request.onerror = function () {
+                datalist.error.setAttribute('title', datalist.lang.error);
+                datalist.group.classList.add('datalist-error');
+                datalist.stopLoading();
+
+                if (error) {
+                    error();
+                }
+            };
+
+            datalist.request.send();
         },
         stopLoading: function () {
+            if (this.request && this.request.readyState != 4) {
+                this.request.abort();
+            }
+
             clearTimeout(this.loading);
             this.group.classList.remove('datalist-loading');
         },
@@ -928,6 +935,8 @@ var MvcDatalist = (function () {
             });
 
             datalist.search.addEventListener('blur', function () {
+                datalist.stopLoading();
+                datalist.autocomplete.hide();
                 datalist.group.classList.remove('datalist-focus');
 
                 var originalValue = this.value;
@@ -942,8 +951,6 @@ var MvcDatalist = (function () {
                 if (!datalist.multi && datalist.search.getAttribute('name')) {
                     this.value = originalValue;
                 }
-
-                datalist.autocomplete.hide();
             });
 
             datalist.search.addEventListener('keydown', function (e) {
@@ -968,7 +975,7 @@ var MvcDatalist = (function () {
                     datalist.autocomplete.activeItem.dispatchEvent(click);
                 }
             });
-            datalist.search.addEventListener('input', function (e) {
+            datalist.search.addEventListener('input', function () {
                 if (!this.value.length && !datalist.multi && datalist.selected.length) {
                     datalist.autocomplete.hide();
                     datalist.select([], true);
@@ -988,6 +995,8 @@ var MvcDatalist = (function () {
 
                 for (var j = 0; j < inputs.length; j++) {
                     inputs[j].addEventListener('change', function (e) {
+                        datalist.stopLoading();
+
                         if (datalist.events.filterChange) {
                             datalist.events.filterChange.apply(datalist, [e]);
                         }
@@ -996,7 +1005,7 @@ var MvcDatalist = (function () {
                             var rows = [];
                             var ids = [].filter.call(datalist.values, function (element) { return element.value; });
 
-                            datalist.load({ checkIds: ids, rows: ids.length }, function (data) {
+                            datalist.startLoading({ checkIds: ids, rows: ids.length }, function (data) {
                                 for (var i = 0; i < ids.length; i++) {
                                     var index = datalist.indexOf(data.Rows, ids[i].value);
                                     if (index >= 0) {
