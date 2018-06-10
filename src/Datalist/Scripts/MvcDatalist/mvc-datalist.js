@@ -781,14 +781,14 @@ var MvcDatalist = (function () {
         selectFirst: function (triggerChanges) {
             var datalist = this;
 
-            datalist.startLoading({ rows: 1 }, function (data) {
+            datalist.startLoading({ search: '', rows: 1, page: 0 }, function (data) {
                 datalist.select(data.Rows, triggerChanges);
             });
         },
         selectSingle: function (triggerChanges) {
             var datalist = this;
 
-            datalist.startLoading({ rows: 2 }, function (data) {
+            datalist.startLoading({ search: '', rows: 2, page: 0 }, function (data) {
                 if (data.Rows.length == 1) {
                     datalist.select(data.Rows, triggerChanges);
                 } else {
