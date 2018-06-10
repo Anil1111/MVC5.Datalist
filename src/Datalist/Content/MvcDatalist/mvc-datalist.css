@@ -405,10 +405,10 @@
 
 .datalist-pager button {
     border: 1px solid #dee2e6;
+    padding: 0.4rem 0.125rem;
     box-sizing: border-box;
     transition: all 0.3s;
-    min-width: 2.4rem;
-    padding: 0.4rem 0;
+    min-width: 2.2rem;
     background: none;
     cursor: pointer;
     color: #777777;
