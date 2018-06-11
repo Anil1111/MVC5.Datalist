@@ -726,14 +726,8 @@ var MvcDatalist = (function () {
             var datalist = this;
             triggerChanges = triggerChanges == null || triggerChanges;
 
-            if (datalist.events.select) {
-                var e = new CustomEvent('select', { cancelable: true });
-
-                datalist.events.select.apply(datalist, [e, data, triggerChanges]);
-
-                if (e.defaultPrevented) {
-                    return;
-                }
+            if (datalist.events.select && datalist.events.select.apply(datalist, [data, triggerChanges]) === false) {
+                return;
             }
 
             if (triggerChanges && data.length == datalist.selected.length) {
@@ -1007,11 +1001,11 @@ var MvcDatalist = (function () {
                         datalist.stopLoading();
                         datalist.filter.page = 0;
 
-                        if (datalist.events.filterChange) {
-                            datalist.events.filterChange.apply(datalist, [e]);
+                        if (datalist.events.filterChange && datalist.events.filterChange.apply(datalist) === false) {
+                            return;
                         }
 
-                        if (!e.defaultPrevented && datalist.selected.length) {
+                        if (datalist.selected.length) {
                             var rows = [];
                             var ids = [].filter.call(datalist.values, function (element) { return element.value; });
 
