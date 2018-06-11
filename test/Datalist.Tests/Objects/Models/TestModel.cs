@@ -5,7 +5,6 @@ namespace Datalist.Tests.Objects
 {
     public class TestModel
     {
-        [DatalistColumn(-3, Hidden = true)]
         public String Id { get; set; }
 
         [DatalistColumn(8, Filterable = false)]

@@ -5,10 +5,6 @@ namespace Datalist
 {
     public abstract class MvcDatalist
     {
-        public const String Prefix = "Datalist";
-        public const String IdKey = "DatalistIdKey";
-        public const String AcKey = "DatalistAcKey";
-
         public String Url { get; set; }
         public String Name { get; set; }
         public String Title { get; set; }

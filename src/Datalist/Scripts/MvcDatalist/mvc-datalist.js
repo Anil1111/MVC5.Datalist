@@ -35,7 +35,7 @@ var MvcDatalistFilter = (function () {
             }
 
             for (i = 0; i < filter.selected.length; i++) {
-                query += '&selected=' + encodeURIComponent(filter.selected[i].DatalistIdKey);
+                query += '&selected=' + encodeURIComponent(filter.selected[i].Id);
             }
 
             for (i = 0; i < filter.checkIds.length; i++) {
@@ -190,7 +190,7 @@ var MvcDatalistDialog = (function () {
             }
 
             var hasSplit = false;
-            var hasSelection = rows.length && this.datalist.indexOf(this.selected, rows[0].DatalistIdKey) >= 0;
+            var hasSelection = rows.length && this.datalist.indexOf(this.selected, rows[0].Id) >= 0;
 
             for (var i = 0; i < rows.length; i++) {
                 var row = this.createDataRow(rows[i]);
@@ -208,7 +208,7 @@ var MvcDatalistDialog = (function () {
 
                 row.appendChild(selection);
 
-                if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].DatalistIdKey) < 0) {
+                if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].Id) < 0) {
                     var separator = document.createElement('tr');
                     var empty = document.createElement('td');
 
@@ -302,7 +302,7 @@ var MvcDatalistDialog = (function () {
             var dialog = this;
             var datalist = this.datalist;
             var row = document.createElement('tr');
-            if (datalist.indexOf(dialog.selected, data.DatalistIdKey) >= 0) {
+            if (datalist.indexOf(dialog.selected, data.Id) >= 0) {
                 row.className = 'selected';
             }
 
@@ -311,7 +311,7 @@ var MvcDatalistDialog = (function () {
                     return;
                 }
 
-                var index = datalist.indexOf(dialog.selected, data.DatalistIdKey);
+                var index = datalist.indexOf(dialog.selected, data.Id);
                 if (index >= 0) {
                     if (datalist.multi) {
                         dialog.selected.splice(index, 1);
@@ -483,13 +483,13 @@ var MvcDatalistAutocomplete = (function () {
                     autocomplete.clear();
 
                     data = data.Rows.filter(function (row) {
-                        return !datalist.multi || datalist.indexOf(datalist.selected, row.DatalistIdKey) < 0;
+                        return !datalist.multi || datalist.indexOf(datalist.selected, row.Id) < 0;
                     });
 
                     for (var i = 0; i < data.length; i++) {
                         var item = document.createElement('li');
-                        item.dataset.id = data[i].DatalistIdKey;
-                        item.innerText = data[i].DatalistAcKey;
+                        item.innerText = data[i].Label;
+                        item.dataset.id = data[i].Id;
 
                         autocomplete.element.appendChild(item);
                         autocomplete.bind(item, [data[i]]);
@@ -740,7 +740,7 @@ var MvcDatalist = (function () {
             if (triggerChanges && data.length == datalist.selected.length) {
                 triggerChanges = false;
                 for (var i = 0; i < data.length && !triggerChanges; i++) {
-                    triggerChanges = data[i].DatalistIdKey != datalist.selected[i].DatalistIdKey;
+                    triggerChanges = data[i].Id != datalist.selected[i].Id;
                 }
             }
 
@@ -765,8 +765,8 @@ var MvcDatalist = (function () {
 
                 datalist.resizeSearch();
             } else if (data.length) {
-                datalist.values[0].value = data[0].DatalistIdKey;
-                datalist.search.value = data[0].DatalistAcKey;
+                datalist.values[0].value = data[0].Id;
+                datalist.search.value = data[0].Label;
             } else {
                 datalist.values[0].value = '';
                 datalist.search.value = '';
@@ -815,12 +815,12 @@ var MvcDatalist = (function () {
                 button.type = 'button';
 
                 var item = document.createElement('div');
-                item.innerText = data[i].DatalistAcKey || '';
+                item.innerText = data[i].Label || '';
                 item.className = 'datalist-item';
                 item.appendChild(button);
                 items.push(item);
 
-                this.bindDeselect(button, data[i].DatalistIdKey);
+                this.bindDeselect(button, data[i].Id);
             }
 
             return items;
@@ -831,7 +831,7 @@ var MvcDatalist = (function () {
             for (var i = 0; i < data.length; i++) {
                 var input = document.createElement('input');
                 input.className = 'datalist-value';
-                input.value = data[i].DatalistIdKey;
+                input.value = data[i].Id;
                 input.type = 'hidden';
                 input.name = this.for;
 
@@ -888,13 +888,13 @@ var MvcDatalist = (function () {
             var datalist = this;
 
             close.addEventListener('click', function () {
-                datalist.select(datalist.selected.filter(function (value) { return value.DatalistIdKey != id; }), true);
+                datalist.select(datalist.selected.filter(function (value) { return value.Id != id; }), true);
                 datalist.search.focus();
             });
         },
         indexOf: function (selection, id) {
             for (var i = 0; i < selection.length; i++) {
-                if (selection[i].DatalistIdKey == id) {
+                if (selection[i].Id == id) {
                     return i;
                 }
             }
@@ -951,7 +951,7 @@ var MvcDatalist = (function () {
 
                 var originalValue = this.value;
                 if (!datalist.multi && datalist.selected.length) {
-                    if (datalist.selected[0].DatalistAcKey != this.value) {
+                    if (datalist.selected[0].Label != this.value) {
                         datalist.select([], true);
                     }
                 } else {
