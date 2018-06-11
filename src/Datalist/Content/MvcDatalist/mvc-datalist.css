@@ -30,6 +30,7 @@
     display: inline-block;
     white-space: nowrap;
     background: #f8f8f8;
+    line-height: 1.5;
     margin: 0.125rem;
     font-size: 1rem;
     color: #999999;
@@ -418,6 +419,7 @@
     padding: 0.4rem 0.125rem;
     box-sizing: border-box;
     min-width: 2.2rem;
+    line-height: 1.5;
     background: none;
     cursor: pointer;
     color: #777777;
