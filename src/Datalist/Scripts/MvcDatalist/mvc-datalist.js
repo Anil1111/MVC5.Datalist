@@ -450,12 +450,12 @@ var MvcDatalistOverlay = (function () {
 }());
 var MvcDatalistAutocomplete = (function () {
     function MvcDatalistAutocomplete(datalist) {
-        this.element = document.createElement('ul');
-        this.element.className = 'datalist-autocomplete';
-        this.options = { minLength: 1, rows: 20 };
+        this.items = [];
         this.activeItem = null;
         this.datalist = datalist;
-        this.items = [];
+        this.element = document.createElement('ul');
+        this.element.className = 'datalist-autocomplete';
+        this.options = { minLength: 1, rows: 20, sort: datalist.filter.sort, order: datalist.filter.order };
     }
 
     MvcDatalistAutocomplete.prototype = {
@@ -472,7 +472,14 @@ var MvcDatalistAutocomplete = (function () {
                     return;
                 }
 
-                datalist.startLoading({ search: term, rows: autocomplete.options.rows, page: 0 }, function (data) {
+                datalist.startLoading({
+                    search: term,
+                    rows: autocomplete.options.rows,
+                    page: 0,
+                    sort: autocomplete.options.sort,
+                    order: autocomplete.options.order
+                },
+                function (data) {
                     autocomplete.clear();
 
                     data = data.Rows.filter(function (row) {
@@ -609,12 +616,12 @@ var MvcDatalist = (function () {
         this.valueContainer = group.querySelector('.datalist-values');
         this.values = this.valueContainer.querySelectorAll('.datalist-value');
 
-        this.autocomplete = new MvcDatalistAutocomplete(this);
+        this.instances.push(this);
         this.filter = new MvcDatalistFilter(this);
         this.dialog = new MvcDatalistDialog(this);
-        this.instances.push(this);
-        this.set(options || {});
+        this.autocomplete = new MvcDatalistAutocomplete(this);
 
+        this.set(options || {});
         this.reload(false);
         this.cleanUp();
         this.bind();
@@ -858,7 +865,7 @@ var MvcDatalist = (function () {
 
             datalist.request.onerror = function () {
                 datalist.group.classList.add('datalist-error');
-                datalist.error.title = lookup.lang.error;
+                datalist.error.title = datalist.lang.error;
                 datalist.stopLoading();
 
                 if (error) {
