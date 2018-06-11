@@ -9,9 +9,11 @@ namespace Datalist
         public IList<String> CheckIds { get; set; }
         public IList<String> Selected { get; set; }
 
+        public String Search { get; set; }
+
         public Int32 Page { get; set; }
         public Int32 Rows { get; set; }
-        public String Search { get; set; }
+        public Int32 TotalRows { get; set; }
 
         public String Sort { get; set; }
         public DatalistSortOrder Order { get; set; }

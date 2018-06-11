@@ -95,7 +95,8 @@ namespace Datalist
                 if (typeof(T).GetProperty(property)?.PropertyType == typeof(String))
                     queries.Add($"({property} != null && {property}.ToLower().Contains(@0))");
 
-            if (queries.Count == 0) return models;
+            if (queries.Count == 0)
+                return models;
 
             return models.Where(String.Join(" || ", queries), Filter.Search.ToLower());
         }
@@ -169,15 +170,18 @@ namespace Datalist
 
         public virtual IQueryable<T> Page(IQueryable<T> models)
         {
-            return models
-                .Skip(Filter.Page * Filter.Rows)
-                .Take(Math.Min(Filter.Rows, 99));
+            Filter.TotalRows = models.Count();
+            Filter.Page = Math.Max(0, Filter.Page);
+            Filter.Rows = Math.Min(Math.Max(1, Filter.Rows), 99);
+            Filter.Page = Math.Min(Filter.Page, (Int32)Math.Ceiling(Filter.TotalRows / (Double)Filter.Rows) - 1);
+
+            return models.Skip(Filter.Page * Filter.Rows).Take(Filter.Rows);
         }
 
         public virtual DatalistData FormDatalistData(IQueryable<T> filtered, IQueryable<T> selected, IQueryable<T> notSelected)
         {
             DatalistData data = new DatalistData();
-            data.FilteredRows = filtered.Count();
+            data.FilteredRows = Filter.TotalRows;
             data.Columns = Columns;
 
             foreach (T model in selected.ToArray().Concat(notSelected).ToArray())
@@ -219,10 +223,12 @@ namespace Datalist
         private String GetValue(T model, String propertyName)
         {
             PropertyInfo property = typeof(T).GetProperty(propertyName);
-            if (property == null) return null;
+            if (property == null)
+                return null;
 
             DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
-            if (column?.Format != null) return String.Format(column.Format, property.GetValue(model));
+            if (column?.Format != null)
+                return String.Format(column.Format, property.GetValue(model));
 
             return property.GetValue(model)?.ToString();
         }

@@ -711,33 +711,52 @@ namespace Datalist.Tests.Unit
         #region Page(IQueryable<T> models)
 
         [Theory]
-        [InlineData(0, 0, 0)]
-        [InlineData(0, 1, 1)]
-        [InlineData(0, 5, 5)]
-        [InlineData(1, 0, 0)]
-        [InlineData(1, 1, 1)]
-        [InlineData(1, 5, 5)]
-        [InlineData(19, 0, 0)]
-        [InlineData(19, 1, 1)]
-        [InlineData(20, 0, 0)]
-        [InlineData(20, 1, 1)]
-        [InlineData(20, 5, 5)]
-        [InlineData(199, 0, 0)]
-        [InlineData(199, 1, 1)]
-        [InlineData(199, 5, 5)]
-        [InlineData(200, 0, 0)]
-        [InlineData(0, 98, 98)]
-        [InlineData(0, 99, 99)]
-        [InlineData(0, 100, 99)]
-        [InlineData(0, 150, 99)]
-        public void Page_Rows(Int32 page, Int32 rows, Int32 takeRows)
+        [InlineData(-1, -1, 0, 1)]
+        [InlineData(-1, 0, 0, 1)]
+        [InlineData(-1, 1, 0, 1)]
+        [InlineData(-1, 5, 0, 5)]
+        [InlineData(-1, 99, 0, 99)]
+        [InlineData(-1, 100, 0, 99)]
+        [InlineData(0, -1, 0, 1)]
+        [InlineData(0, 0, 0, 1)]
+        [InlineData(0, 1, 0, 1)]
+        [InlineData(0, 5, 0, 5)]
+        [InlineData(0, 99, 0, 99)]
+        [InlineData(0, 100, 0, 99)]
+        [InlineData(1, -1, 1, 1)]
+        [InlineData(1, 0, 1, 1)]
+        [InlineData(1, 1, 1, 1)]
+        [InlineData(1, 5, 1, 5)]
+        [InlineData(1, 99, 1, 99)]
+        [InlineData(1, 100, 1, 99)]
+        [InlineData(5, -1, 5, 1)]
+        [InlineData(5, 0, 5, 1)]
+        [InlineData(5, 1, 5, 1)]
+        [InlineData(5, 5, 5, 5)]
+        [InlineData(5, 99, 2, 99)]
+        [InlineData(5, 100, 2, 99)]
+        [InlineData(199, -1, 199, 1)]
+        [InlineData(199, 0, 199, 1)]
+        [InlineData(199, 1, 199, 1)]
+        [InlineData(199, 5, 39, 5)]
+        [InlineData(200, -1, 199, 1)]
+        [InlineData(200, 0, 199, 1)]
+        [InlineData(200, 1, 199, 1)]
+        [InlineData(200, 5, 39, 5)]
+        [InlineData(200, 99, 2, 99)]
+        [InlineData(200, 100, 2, 99)]
+        public void Page_Rows(Int32 page, Int32 rows, Int32 expectedPage, Int32 expectedRows)
         {
             datalist.Filter.Page = page;
             datalist.Filter.Rows = rows;
+            datalist.Filter.TotalRows = 1;
 
-            IQueryable<TestModel> expected = datalist.GetModels().Skip(page * rows).Take(takeRows);
+            IQueryable<TestModel> expected = datalist.GetModels().Skip(expectedPage * expectedRows).Take(expectedRows);
             IQueryable<TestModel> actual = datalist.Page(datalist.GetModels());
 
+            Assert.Equal(datalist.Filter.Rows, expectedRows);
+            Assert.Equal(datalist.Filter.Page, expectedPage);
+            Assert.Equal(200, datalist.Filter.TotalRows);
             Assert.Equal(expected, actual);
         }
 
@@ -748,8 +767,10 @@ namespace Datalist.Tests.Unit
         [Fact]
         public void FormDatalistData_FilteredRows()
         {
+            datalist.Filter.TotalRows = 140;
+
             Int32 actual = datalist.FormDatalistData(datalist.GetModels(), new[] { new TestModel() }.AsQueryable(), datalist.GetModels().Take(1)).FilteredRows;
-            Int32 expected = datalist.GetModels().Count();
+            Int32 expected = datalist.Filter.TotalRows;
 
             Assert.Equal(expected, actual);
         }
