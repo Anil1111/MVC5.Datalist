@@ -14,7 +14,7 @@ namespace Datalist.Tests.Unit
 
             Assert.Equal("DatalistDialog", actual.Dialog);
             Assert.Empty(actual.AdditionalFilters);
-            Assert.Equal(20, actual.Filter.Rows);
+            Assert.NotNull(actual.Filter);
             Assert.Empty(actual.Columns);
         }
 

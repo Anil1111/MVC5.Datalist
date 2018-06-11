@@ -23,7 +23,6 @@ namespace Datalist
             Columns = new List<DatalistColumn>();
             Filter = new DatalistFilter();
             Dialog = "DatalistDialog";
-            Filter.Rows = 20;
         }
 
         public abstract DatalistData GetData();

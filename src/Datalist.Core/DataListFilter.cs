@@ -22,6 +22,7 @@ namespace Datalist
 
         public DatalistFilter()
         {
+            Rows = 20;
             Ids = new List<String>();
             CheckIds = new List<String>();
             Selected = new List<String>();
