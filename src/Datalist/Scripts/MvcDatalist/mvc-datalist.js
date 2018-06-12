@@ -9,47 +9,48 @@
  */
 var MvcDatalistFilter = (function () {
     function MvcDatalistFilter(datalist) {
-        var group = datalist.group;
+        var data = datalist.group.dataset;
 
         this.datalist = datalist;
-        this.sort = group.dataset.sort;
-        this.order = group.dataset.order;
-        this.search = group.dataset.search;
-        this.page = parseInt(group.dataset.page);
-        this.rows = parseInt(group.dataset.rows);
-        this.additionalFilters = group.dataset.filters.split(',').filter(Boolean);
+        this.sort = data.sort;
+        this.order = data.order;
+        this.search = data.search;
+        this.page = parseInt(data.page);
+        this.rows = parseInt(data.rows);
+        this.additional = data.filters.split(',').filter(Boolean);
     }
 
     MvcDatalistFilter.prototype = {
         formUrl: function (search) {
+            var encode = encodeURIComponent;
             var url = this.datalist.url.split('?')[0];
             var urlQuery = this.datalist.url.split('?')[1];
             var filter = this.datalist.extend({ ids: [], checkIds: [], selected: [] }, this, search);
-            var query = '?' + (urlQuery ? urlQuery + '&' : '') + 'search=' + encodeURIComponent(filter.search);
+            var query = '?' + (urlQuery ? urlQuery + '&' : '') + 'search=' + encode(filter.search);
 
-            for (var i = 0; i < this.additionalFilters.length; i++) {
-                var filters = document.querySelectorAll('[name="' + this.additionalFilters[i] + '"]');
+            for (var i = 0; i < filter.additional.length; i++) {
+                var filters = document.querySelectorAll('[name="' + filter.additional[i] + '"]');
                 for (var j = 0; j < filters.length; j++) {
-                    query += '&' + encodeURIComponent(this.additionalFilters[i]) + '=' + encodeURIComponent(filters[j].value);
+                    query += '&' + encode(filter.additional[i]) + '=' + encode(filters[j].value);
                 }
             }
 
             for (i = 0; i < filter.selected.length; i++) {
-                query += '&selected=' + encodeURIComponent(filter.selected[i].Id);
+                query += '&selected=' + encode(filter.selected[i].Id);
             }
 
             for (i = 0; i < filter.checkIds.length; i++) {
-                query += '&checkIds=' + encodeURIComponent(filter.checkIds[i].value);
+                query += '&checkIds=' + encode(filter.checkIds[i].value);
             }
 
             for (i = 0; i < filter.ids.length; i++) {
-                query += '&ids=' + encodeURIComponent(filter.ids[i].value);
+                query += '&ids=' + encode(filter.ids[i].value);
             }
 
-            query += '&sort=' + encodeURIComponent(filter.sort) +
-                '&order=' + encodeURIComponent(filter.order) +
-                '&rows=' + encodeURIComponent(filter.rows) +
-                '&page=' + encodeURIComponent(filter.page) +
+            query += '&sort=' + encode(filter.sort) +
+                '&order=' + encode(filter.order) +
+                '&rows=' + encode(filter.rows) +
+                '&page=' + encode(filter.page) +
                 '&_=' + Date.now();
 
             return url + query;
@@ -60,23 +61,26 @@ var MvcDatalistFilter = (function () {
 }());
 var MvcDatalistDialog = (function () {
     function MvcDatalistDialog(datalist) {
-        this.datalist = datalist;
-        this.title = datalist.group.dataset.title;
-        this.element = document.getElementById(datalist.group.dataset.dialog);
-        this.options = { preserveSearch: true, rows: { min: 1, max: 99 }, openDelay: 100 };
+        var dialog = this;
+        var element = document.getElementById(datalist.group.dataset.dialog);
 
-        this.overlay = new MvcDatalistOverlay(this);
-        this.table = this.element.querySelector('table');
-        this.tableHead = this.element.querySelector('thead');
-        this.tableBody = this.element.querySelector('tbody');
-        this.rows = this.element.querySelector('.datalist-rows');
-        this.pager = this.element.querySelector('.datalist-pager');
-        this.header = this.element.querySelector('.datalist-title');
-        this.search = this.element.querySelector('.datalist-search');
-        this.selector = this.element.querySelector('.datalist-selector');
-        this.closeButton = this.element.querySelector('.datalist-close');
-        this.error = this.element.querySelector('.datalist-dialog-error');
-        this.loader = this.element.querySelector('.datalist-dialog-loader');
+        dialog.element = element;
+        dialog.datalist = datalist;
+        dialog.title = datalist.group.dataset.title;
+        dialog.options = { preserveSearch: true, rows: { min: 1, max: 99 }, openDelay: 100 };
+
+        dialog.overlay = new MvcDatalistOverlay(this);
+        dialog.table = element.querySelector('table');
+        dialog.tableHead = element.querySelector('thead');
+        dialog.tableBody = element.querySelector('tbody');
+        dialog.rows = element.querySelector('.datalist-rows');
+        dialog.pager = element.querySelector('.datalist-pager');
+        dialog.header = element.querySelector('.datalist-title');
+        dialog.search = element.querySelector('.datalist-search');
+        dialog.selector = element.querySelector('.datalist-selector');
+        dialog.closeButton = element.querySelector('.datalist-close');
+        dialog.error = element.querySelector('.datalist-dialog-error');
+        dialog.loader = element.querySelector('.datalist-dialog-loader');
     }
 
     MvcDatalistDialog.prototype = {
@@ -90,11 +94,11 @@ var MvcDatalistDialog = (function () {
             dialog.header.innerText = dialog.title;
             dialog.rows.value = dialog.limitRows(filter.rows);
             dialog.selected = dialog.datalist.selected.slice();
-            dialog.error.innerHTML = dialog.datalist.lang['error'];
-            dialog.search.placeholder = dialog.datalist.lang['search'];
+            dialog.error.innerHTML = dialog.datalist.lang.error;
+            dialog.search.placeholder = dialog.datalist.lang.search;
             filter.search = dialog.options.preserveSearch ? filter.search : '';
             dialog.selector.style.display = dialog.datalist.multi ? '' : 'none';
-            dialog.selector.innerText = dialog.datalist.lang['select'].replace('{0}', dialog.datalist.selected.length);
+            dialog.selector.innerText = dialog.datalist.lang.select.replace('{0}', dialog.datalist.selected.length);
 
             dialog.bind();
             dialog.refresh();
@@ -150,6 +154,7 @@ var MvcDatalistDialog = (function () {
             dialog.tableBody.innerHTML = '';
             dialog.tableHead.innerHTML = '';
             dialog.loader.style.opacity = 0;
+
             setTimeout(function () {
                 dialog.loader.style.display = 'none';
             }, dialog.datalist.options.loadingDelay);
@@ -181,7 +186,7 @@ var MvcDatalistDialog = (function () {
                 var empty = document.createElement('td');
                 var row = document.createElement('tr');
 
-                empty.innerHTML = this.datalist.lang['noData'];
+                empty.innerHTML = this.datalist.lang.noData;
                 empty.colspan = columns.length + 1;
                 row.className = 'datalist-empty';
 
@@ -329,7 +334,7 @@ var MvcDatalistDialog = (function () {
                 }
 
                 if (datalist.multi) {
-                    dialog.selector.innerText = dialog.datalist.lang['select'].replace('{0}', dialog.selected.length);
+                    dialog.selector.innerText = dialog.datalist.lang.select.replace('{0}', dialog.selected.length);
                 } else {
                     datalist.select(dialog.selected, true);
 
@@ -354,15 +359,17 @@ var MvcDatalistDialog = (function () {
         },
 
         bind: function () {
-            this.search.removeEventListener('keyup', this.searchChanged);
-            this.closeButton.removeEventListener('click', this.close);
-            this.rows.removeEventListener('change', this.rowsChanged);
-            this.selector.removeEventListener('click', this.close);
+            var dialog = this;
 
-            this.search.addEventListener('keyup', this.searchChanged);
-            this.closeButton.addEventListener('click', this.close);
-            this.rows.addEventListener('change', this.rowsChanged);
-            this.selector.addEventListener('click', this.close);
+            dialog.selector.removeEventListener('click', dialog.close);
+            dialog.rows.removeEventListener('change', dialog.rowsChanged);
+            dialog.closeButton.removeEventListener('click', dialog.close);
+            dialog.search.removeEventListener('keyup', dialog.searchChanged);
+
+            dialog.selector.addEventListener('click', dialog.close);
+            dialog.rows.addEventListener('change', dialog.rowsChanged);
+            dialog.closeButton.addEventListener('click', dialog.close);
+            dialog.search.addEventListener('keyup', dialog.searchChanged);
         },
         rowsChanged: function () {
             var dialog = MvcDatalistDialog.prototype.current;
@@ -450,9 +457,8 @@ var MvcDatalistOverlay = (function () {
 }());
 var MvcDatalistAutocomplete = (function () {
     function MvcDatalistAutocomplete(datalist) {
-        this.items = [];
-        this.activeItem = null;
         this.datalist = datalist;
+        this.activeItem = null;
         this.element = document.createElement('ul');
         this.element.className = 'datalist-autocomplete';
         this.options = { minLength: 1, rows: 20, sort: datalist.filter.sort, order: datalist.filter.order };
@@ -478,9 +484,8 @@ var MvcDatalistAutocomplete = (function () {
                     page: 0,
                     sort: autocomplete.options.sort,
                     order: autocomplete.options.order
-                },
-                function (data) {
-                    autocomplete.clear();
+                }, function (data) {
+                    autocomplete.hide();
 
                     data = data.Rows.filter(function (row) {
                         return !datalist.multi || datalist.indexOf(datalist.selected, row.Id) < 0;
@@ -493,13 +498,10 @@ var MvcDatalistAutocomplete = (function () {
 
                         autocomplete.element.appendChild(item);
                         autocomplete.bind(item, [data[i]]);
-                        autocomplete.items.push(item);
                     }
 
                     if (data.length) {
                         autocomplete.show();
-                    } else {
-                        autocomplete.hide();
                     }
                 });
             }, autocomplete.datalist.options.searchDelay);
@@ -513,11 +515,12 @@ var MvcDatalistAutocomplete = (function () {
 
             if (this.activeItem) {
                 this.activeItem.classList.remove('active');
+                this.activeItem = this.activeItem.previousSibling;
+            } else {
+                this.activeItem = this.element.lastElementChild;
+            }
 
-                this.activeItem = this.activeItem.previousSibling || this.items[this.items.length - 1];
-                this.activeItem.classList.add('active');
-            } else if (this.items.length) {
-                this.activeItem = this.items[this.items.length - 1];
+            if (this.activeItem) {
                 this.activeItem.classList.add('active');
             }
         },
@@ -530,18 +533,14 @@ var MvcDatalistAutocomplete = (function () {
 
             if (this.activeItem) {
                 this.activeItem.classList.remove('active');
+                this.activeItem = this.activeItem.nextSibling
+            } else {
+                this.activeItem = this.element.firstElementChild;
+            }
 
-                this.activeItem = this.activeItem.nextSibling || this.items[0];
-                this.activeItem.classList.add('active');
-            } else if (this.items.length) {
-                this.activeItem = this.items[0];
+            if (this.activeItem) {
                 this.activeItem.classList.add('active');
             }
-        },
-        clear: function () {
-            this.items = [];
-            this.activeItem = null;
-            this.element.innerHTML = '';
         },
         show: function () {
             var search = this.datalist.search.getBoundingClientRect();
@@ -552,7 +551,8 @@ var MvcDatalistAutocomplete = (function () {
             document.body.appendChild(this.element);
         },
         hide: function () {
-            this.clear();
+            this.activeItem = null;
+            this.element.innerHTML = '';
 
             if (this.element.parentNode) {
                 document.body.removeChild(this.element);
@@ -593,38 +593,39 @@ var MvcDatalistAutocomplete = (function () {
 }());
 var MvcDatalist = (function () {
     function MvcDatalist(element, options) {
-        var group = this.closestGroup(element);
+        var datalist = this;
+        var group = datalist.closestGroup(element);
         if (group.dataset.id) {
-            return this.instances[parseInt(group.dataset.id)].set(options || {});
+            return datalist.instances[parseInt(group.dataset.id)].set(options || {});
         }
 
-        this.items = [];
-        this.events = {};
-        this.group = group;
-        this.selected = [];
-        this.for = group.dataset.for;
-        this.url = group.dataset.url;
-        this.multi = group.dataset.multi == 'true';
-        this.group.dataset.id = this.instances.length;
-        this.readonly = group.dataset.readonly == 'true';
-        this.options = { searchDelay: 500, loadingDelay: 300 };
+        datalist.items = [];
+        datalist.events = {};
+        datalist.group = group;
+        datalist.selected = [];
+        datalist.for = group.dataset.for;
+        datalist.url = group.dataset.url;
+        datalist.multi = group.dataset.multi == 'true';
+        datalist.readonly = group.dataset.readonly == 'true';
+        datalist.group.dataset.id = datalist.instances.length;
+        datalist.options = { searchDelay: 500, loadingDelay: 300 };
 
-        this.search = group.querySelector('.datalist-input');
-        this.browser = group.querySelector('.datalist-browser');
-        this.control = group.querySelector('.datalist-control');
-        this.error = group.querySelector('.datalist-control-error');
-        this.valueContainer = group.querySelector('.datalist-values');
-        this.values = this.valueContainer.querySelectorAll('.datalist-value');
+        datalist.search = group.querySelector('.datalist-input');
+        datalist.browser = group.querySelector('.datalist-browser');
+        datalist.control = group.querySelector('.datalist-control');
+        datalist.error = group.querySelector('.datalist-control-error');
+        datalist.valueContainer = group.querySelector('.datalist-values');
+        datalist.values = datalist.valueContainer.querySelectorAll('.datalist-value');
 
-        this.instances.push(this);
-        this.filter = new MvcDatalistFilter(this);
-        this.dialog = new MvcDatalistDialog(this);
-        this.autocomplete = new MvcDatalistAutocomplete(this);
+        datalist.instances.push(datalist);
+        datalist.filter = new MvcDatalistFilter(datalist);
+        datalist.dialog = new MvcDatalistDialog(datalist);
+        datalist.autocomplete = new MvcDatalistAutocomplete(datalist);
 
-        this.set(options || {});
-        this.reload(false);
-        this.cleanUp();
-        this.bind();
+        datalist.set(options || {});
+        datalist.reload(false);
+        datalist.cleanUp();
+        datalist.bind();
     }
 
     MvcDatalist.prototype = {
@@ -637,16 +638,16 @@ var MvcDatalist = (function () {
         },
 
         closestGroup: function (element) {
-            var datalist = element;
-            while (datalist.parentNode && !datalist.classList.contains('datalist')) {
-                datalist = datalist.parentNode;
+            var group = element;
+            while (group.parentNode && !group.classList.contains('datalist')) {
+                group = group.parentNode;
             }
 
-            if (datalist == document) {
+            if (group == document) {
                 throw new Error('Datalist can only be created from within datalist structure.');
             }
 
-            return datalist;
+            return group;
         },
 
         extend: function () {
@@ -675,27 +676,28 @@ var MvcDatalist = (function () {
             return this;
         },
         setReadonly: function (readonly) {
-            this.readonly = readonly;
+            var datalist = this;
+            datalist.readonly = readonly;
 
             if (readonly) {
-                this.search.tabIndex = -1;
-                this.search.readOnly = true;
-                this.group.classList.add('datalist-readonly');
+                datalist.search.tabIndex = -1;
+                datalist.search.readOnly = true;
+                datalist.group.classList.add('datalist-readonly');
 
-                if (this.browser) {
-                    this.browser.tabIndex = -1;
+                if (datalist.browser) {
+                    datalist.browser.tabIndex = -1;
                 }
             } else {
-                this.search.removeAttribute('readonly');
-                this.search.removeAttribute('tabindex');
-                this.group.classList.remove('datalist-readonly');
+                datalist.search.removeAttribute('readonly');
+                datalist.search.removeAttribute('tabindex');
+                datalist.group.classList.remove('datalist-readonly');
 
-                if (this.browser) {
-                    this.browser.removeAttribute('tabindex');
+                if (datalist.browser) {
+                    datalist.browser.removeAttribute('tabindex');
                 }
             }
 
-            this.resizeSearch();
+            datalist.resize();
         },
 
         browse: function () {
@@ -707,7 +709,9 @@ var MvcDatalist = (function () {
             var rows = [];
             var datalist = this;
             var originalValue = datalist.search.value;
-            var ids = [].filter.call(datalist.values, function (element) { return element.value; });
+            var ids = [].filter.call(datalist.values, function (element) {
+                return element.value;
+            });
 
             if (ids.length) {
                 datalist.startLoading({ ids: ids, rows: ids.length, page: 0 }, function (data) {
@@ -733,7 +737,7 @@ var MvcDatalist = (function () {
             var datalist = this;
             triggerChanges = triggerChanges == null || triggerChanges;
 
-            if (datalist.events.select && datalist.events.select.apply(datalist, [data, triggerChanges]) === false) {
+            if (datalist.events.select && datalist.events.select.call(datalist, data, triggerChanges) === false) {
                 return;
             }
 
@@ -763,7 +767,7 @@ var MvcDatalist = (function () {
                     datalist.valueContainer.appendChild(value);
                 });
 
-                datalist.resizeSearch();
+                datalist.resize();
             } else if (data.length) {
                 datalist.values[0].value = data[0].Id;
                 datalist.search.value = data[0].Label;
@@ -903,43 +907,47 @@ var MvcDatalist = (function () {
 
             return -1;
         },
-        resizeSearch: function () {
-            if (this.items.length) {
-                var style = getComputedStyle(this.control);
-                var contentWidth = this.control.clientWidth;
-                var lastItem = this.items[this.items.length - 1];
+        cleanUp: function () {
+            var data = this.group.dataset;
+
+            delete data.readonly;
+            delete data.filters;
+            delete data.dialog;
+            delete data.search;
+            delete data.multi;
+            delete data.order;
+            delete data.title;
+            delete data.page;
+            delete data.rows;
+            delete data.sort;
+            delete data.url;
+        },
+        resize: function () {
+            var datalist = this;
+
+            if (datalist.items.length) {
+                var style = getComputedStyle(datalist.control);
+                var contentWidth = datalist.control.clientWidth;
+                var lastItem = datalist.items[datalist.items.length - 1];
                 contentWidth -= parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
                 var widthLeft = Math.floor(contentWidth - lastItem.offsetLeft - lastItem.offsetWidth);
 
                 if (widthLeft > contentWidth / 3) {
-                    style = getComputedStyle(this.search);
+                    style = getComputedStyle(datalist.search);
                     widthLeft -= parseFloat(style.marginLeft) + parseFloat(style.marginRight) + 4;
-                    this.search.style.width = widthLeft + 'px';
+                    datalist.search.style.width = widthLeft + 'px';
                 } else {
-                    this.search.style.width = '';
+                    datalist.search.style.width = '';
                 }
             } else {
-                this.search.style.width = '';
+                datalist.search.style.width = '';
             }
-        },
-        cleanUp: function () {
-            delete this.group.dataset.readonly;
-            delete this.group.dataset.filters;
-            delete this.group.dataset.dialog;
-            delete this.group.dataset.search;
-            delete this.group.dataset.multi;
-            delete this.group.dataset.order;
-            delete this.group.dataset.title;
-            delete this.group.dataset.page;
-            delete this.group.dataset.rows;
-            delete this.group.dataset.sort;
-            delete this.group.dataset.url;
         },
         bind: function () {
             var datalist = this;
 
             window.addEventListener('resize', function () {
-                datalist.resizeSearch();
+                datalist.resize();
             });
 
             datalist.search.addEventListener('focus', function () {
@@ -1002,15 +1010,15 @@ var MvcDatalist = (function () {
                 });
             }
 
-            for (var i = 0; i < datalist.filter.additionalFilters.length; i++) {
-                var inputs = document.querySelectorAll('[name="' + datalist.filter.additionalFilters[i] + '"]');
+            for (var i = 0; i < datalist.filter.additional.length; i++) {
+                var inputs = document.querySelectorAll('[name="' + datalist.filter.additional[i] + '"]');
 
                 for (var j = 0; j < inputs.length; j++) {
-                    inputs[j].addEventListener('change', function (e) {
+                    inputs[j].addEventListener('change', function () {
                         datalist.stopLoading();
                         datalist.filter.page = 0;
 
-                        if (datalist.events.filterChange && datalist.events.filterChange.apply(datalist) === false) {
+                        if (datalist.events.filterChange && datalist.events.filterChange.call(datalist) === false) {
                             return;
                         }
 
