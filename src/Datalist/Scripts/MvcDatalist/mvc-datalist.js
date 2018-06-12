@@ -846,6 +846,7 @@ var MvcDatalist = (function () {
 
             datalist.stopLoading();
             datalist.loading = setTimeout(function () {
+                datalist.autocomplete.hide();
                 datalist.group.classList.add('datalist-loading');
             }, datalist.options.loadingDelay);
             datalist.group.classList.remove('datalist-error');
@@ -866,6 +867,7 @@ var MvcDatalist = (function () {
             datalist.request.onerror = function () {
                 datalist.group.classList.add('datalist-error');
                 datalist.error.title = datalist.lang.error;
+                datalist.autocomplete.hide();
                 datalist.stopLoading();
 
                 if (error) {
