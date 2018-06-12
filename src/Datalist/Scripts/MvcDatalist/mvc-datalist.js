@@ -1018,7 +1018,7 @@ var MvcDatalist = (function () {
                         datalist.stopLoading();
                         datalist.filter.page = 0;
 
-                        if (datalist.events.filterChange && datalist.events.filterChange.call(datalist) === false) {
+                        if (datalist.events.filterChange && datalist.events.filterChange.call(datalist, this) === false) {
                             return;
                         }
 
