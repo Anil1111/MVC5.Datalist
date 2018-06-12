@@ -187,7 +187,7 @@ var MvcDatalistDialog = (function () {
                 var row = document.createElement('tr');
 
                 empty.innerHTML = this.datalist.lang.noData;
-                empty.colspan = columns.length + 1;
+                empty.colSpan = columns.length + 1;
                 row.className = 'datalist-empty';
 
                 this.tableBody.appendChild(row);
@@ -218,7 +218,7 @@ var MvcDatalistDialog = (function () {
                     var empty = document.createElement('td');
 
                     separator.className = 'datalist-split';
-                    empty.colspan = columns.length + 1;
+                    empty.colSpan = columns.length + 1;
 
                     this.tableBody.appendChild(separator);
                     separator.appendChild(empty);
