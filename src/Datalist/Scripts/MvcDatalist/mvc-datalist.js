@@ -857,6 +857,7 @@ var MvcDatalist = (function () {
 
             datalist.request = new XMLHttpRequest();
             datalist.request.open('GET', datalist.filter.formUrl(search), true);
+            datalist.request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
             datalist.request.onload = function () {
                 if (200 <= datalist.request.status && datalist.request.status < 400) {
