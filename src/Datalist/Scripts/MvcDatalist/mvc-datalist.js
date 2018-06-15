@@ -425,8 +425,10 @@ var MvcDatalistOverlay = (function () {
         show: function () {
             var body = document.body.getBoundingClientRect();
             if (body.left + body.right < window.innerWidth) {
+                var scrollWidth = window.innerWidth - document.body.clientWidth;
                 var paddingRight = parseFloat(getComputedStyle(document.body).paddingRight);
-                document.body.style.paddingRight = (paddingRight + 17) + 'px';
+
+                document.body.style.paddingRight = (paddingRight + scrollWidth) + 'px';
             }
 
             document.body.classList.add('datalist-open');
