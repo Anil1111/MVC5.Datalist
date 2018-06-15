@@ -348,14 +348,12 @@ var MvcDatalistDialog = (function () {
         },
 
         limitPage: function (value) {
-            value = Math.max(0, value);
-
-            return Math.min(value, Math.ceil((this.totalRows - this.selected.length) / this.datalist.filter.rows) - 1);
+            return Math.max(0, Math.min(value, Math.ceil((this.totalRows - this.selected.length) / this.datalist.filter.rows) - 1));
         },
         limitRows: function (value) {
-            var options = this.options.rows;
+            value = Math.max(this.options.rows.min, Math.min(parseInt(value), this.options.rows.max));
 
-            return Math.min(Math.max(parseInt(value), options.min), options.max) || this.datalist.filter.rows;
+            return isNaN(value) ? this.datalist.filter.rows : value;
         },
 
         bind: function () {

@@ -171,9 +171,8 @@ namespace Datalist
         public virtual IQueryable<T> Page(IQueryable<T> models)
         {
             Filter.TotalRows = models.Count();
-            Filter.Page = Math.Max(0, Filter.Page);
-            Filter.Rows = Math.Min(Math.Max(1, Filter.Rows), 99);
-            Filter.Page = Math.Min(Filter.Page, (Int32)Math.Ceiling(Filter.TotalRows / (Double)Filter.Rows) - 1);
+            Filter.Rows = Math.Max(1, Math.Min(Filter.Rows, 99));
+            Filter.Page = Math.Max(0, Math.Min(Filter.Page, (Int32)Math.Ceiling(Filter.TotalRows / (Double)Filter.Rows) - 1));
 
             return models.Skip(Filter.Page * Filter.Rows).Take(Filter.Rows);
         }

@@ -791,10 +791,25 @@ namespace Datalist.Tests.Unit
             IQueryable<TestModel> expected = datalist.GetModels().Skip(expectedPage * expectedRows).Take(expectedRows);
             IQueryable<TestModel> actual = datalist.Page(datalist.GetModels());
 
-            Assert.Equal(datalist.Filter.Rows, expectedRows);
-            Assert.Equal(datalist.Filter.Page, expectedPage);
+            Assert.Equal(expectedPage, datalist.Filter.Page);
+            Assert.Equal(expectedPage, datalist.Filter.Page);
             Assert.Equal(200, datalist.Filter.TotalRows);
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Page_NoRows()
+        {
+            datalist.Filter.Page = 3;
+            datalist.Filter.Rows = 2;
+            datalist.Filter.TotalRows = 1;
+
+            IQueryable<TestModel> actual = datalist.Page(new TestModel[0].AsQueryable());
+
+            Assert.Equal(0, datalist.Filter.TotalRows);
+            Assert.Equal(0, datalist.Filter.Page);
+            Assert.Equal(2, datalist.Filter.Rows);
+            Assert.Empty(actual);
         }
 
         #endregion
