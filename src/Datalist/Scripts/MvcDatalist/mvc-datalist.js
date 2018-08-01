@@ -399,11 +399,11 @@ var MvcDatalistOverlay = (function () {
     MvcDatalistOverlay.prototype = {
         getClosestOverlay: function (element) {
             var overlay = element;
-            while (overlay.parentNode && !overlay.classList.contains('datalist-overlay')) {
-                overlay = overlay.parentNode;
+            while (overlay && !overlay.classList.contains('datalist-overlay')) {
+                overlay = overlay.parentElement;
             }
 
-            if (overlay == document) {
+            if (!overlay) {
                 throw new Error('Datalist dialog has to be inside a datalist-overlay.');
             }
 
@@ -494,7 +494,7 @@ var MvcDatalistAutocomplete = (function () {
             }, autocomplete.datalist.options.searchDelay);
         },
         previous: function () {
-            if (!this.element.parentNode) {
+            if (!this.element.parentElement) {
                 this.search(this.datalist.search.value);
 
                 return;
@@ -502,7 +502,7 @@ var MvcDatalistAutocomplete = (function () {
 
             if (this.activeItem) {
                 this.activeItem.classList.remove('active');
-                this.activeItem = this.activeItem.previousSibling;
+                this.activeItem = this.activeItem.previousElementSibling;
             } else {
                 this.activeItem = this.element.lastElementChild;
             }
@@ -512,7 +512,7 @@ var MvcDatalistAutocomplete = (function () {
             }
         },
         next: function () {
-            if (!this.element.parentNode) {
+            if (!this.element.parentElement) {
                 this.search(this.datalist.search.value);
 
                 return;
@@ -520,7 +520,7 @@ var MvcDatalistAutocomplete = (function () {
 
             if (this.activeItem) {
                 this.activeItem.classList.remove('active');
-                this.activeItem = this.activeItem.nextSibling
+                this.activeItem = this.activeItem.nextElementSibling
             } else {
                 this.activeItem = this.element.firstElementChild;
             }
@@ -541,7 +541,7 @@ var MvcDatalistAutocomplete = (function () {
             this.activeItem = null;
             this.element.innerHTML = '';
 
-            if (this.element.parentNode) {
+            if (this.element.parentElement) {
                 document.body.removeChild(this.element);
             }
         },
@@ -626,11 +626,11 @@ var MvcDatalist = (function () {
 
         closestGroup: function (element) {
             var group = element;
-            while (group.parentNode && !group.classList.contains('datalist')) {
-                group = group.parentNode;
+            while (group && !group.classList.contains('datalist')) {
+                group = group.parentElement;
             }
 
-            if (group == document) {
+            if (!group) {
                 throw new Error('Datalist can only be created from within datalist structure.');
             }
 
@@ -745,7 +745,7 @@ var MvcDatalist = (function () {
                 datalist.search.value = '';
                 datalist.valueContainer.innerHTML = '';;
                 datalist.items.forEach(function (item) {
-                    item.parentNode.removeChild(item);
+                    item.parentElement.removeChild(item);
                 });
 
                 datalist.items = datalist.createSelectedItems(data);
