@@ -121,13 +121,16 @@ namespace Datalist
             if (key.PropertyType == typeof(String))
                 return models.Where($"@0.Contains(outerIt.{key.Name})", ids);
 
+            if (key.PropertyType == typeof(Guid))
+                return models.Where($"@0.Contains(outerIt.{key.Name})", Parse<Guid>(ids));
+
             if (key.PropertyType == typeof(Int32))
                 return models.Where($"@0.Contains(outerIt.{key.Name})", Parse<Int32>(ids));
 
             if (key.PropertyType == typeof(Int64))
                 return models.Where($"@0.Contains(outerIt.{key.Name})", Parse<Int64>(ids));
 
-            throw new DatalistException($"'{typeof(T).Name}.{key.Name}' property type has to be a string, int or a long.");
+            throw new DatalistException($"'{typeof(T).Name}.{key.Name}' property type has to be a string, guid, int or a long.");
         }
         public virtual IQueryable<T> FilterByNotIds(IQueryable<T> models, IList<String> ids)
         {
@@ -140,13 +143,16 @@ namespace Datalist
             if (key.PropertyType == typeof(String))
                 return models.Where($"!@0.Contains(outerIt.{key.Name})", ids);
 
+            if (key.PropertyType == typeof(Guid))
+                return models.Where($"!@0.Contains(outerIt.{key.Name})", Parse<Guid>(ids));
+
             if (key.PropertyType == typeof(Int32))
                 return models.Where($"!@0.Contains(outerIt.{key.Name})", Parse<Int32>(ids));
 
             if (key.PropertyType == typeof(Int64))
                 return models.Where($"!@0.Contains(outerIt.{key.Name})", Parse<Int64>(ids));
 
-            throw new DatalistException($"'{typeof(T).Name}.{key.Name}' property type has to be a string, int or a long.");
+            throw new DatalistException($"'{typeof(T).Name}.{key.Name}' property type has to be a string, guid, int or a long.");
         }
         public virtual IQueryable<T> FilterByCheckIds(IQueryable<T> models, IList<String> ids)
         {

@@ -471,6 +471,19 @@ namespace Datalist.Tests.Unit
         }
 
         [Fact]
+        public void FilterByIds_Guids()
+        {
+            TestDatalist<GuidModel> testDatalist = new TestDatalist<GuidModel>();
+            for (Int32 i = 0; i < 20; i++) testDatalist.Models.Add(new GuidModel { Id = Guid.NewGuid() });
+            List<String> ids = new List<String> { testDatalist.Models[4].Id.ToString(), testDatalist.Models[9].Id.ToString() };
+
+            IQueryable<GuidModel> expected = testDatalist.GetModels().Where(model => ids.Contains(model.Id.ToString()));
+            IQueryable<GuidModel> actual = testDatalist.FilterByIds(testDatalist.GetModels(), ids);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void FilterByIds_Int32Key()
         {
             TestDatalist<Int32Model> testDatalist = new TestDatalist<Int32Model>();
@@ -497,9 +510,9 @@ namespace Datalist.Tests.Unit
         [Fact]
         public void FilterByIds_NotSupportedIdType_Throws()
         {
-            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<GuidModel>().FilterByIds(null, new String[0]));
+            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<Int16Model>().FilterByIds(null, new String[0]));
 
-            String expected = $"'{typeof(GuidModel).Name}.Id' property type has to be a string, int or a long.";
+            String expected = $"'{typeof(Int16Model).Name}.Id' property type has to be a string, guid, int or a long.";
             String actual = exception.Message;
 
             Assert.Equal(expected, actual);
@@ -534,6 +547,19 @@ namespace Datalist.Tests.Unit
         }
 
         [Fact]
+        public void FilterByNotIds_Guids()
+        {
+            TestDatalist<GuidModel> testDatalist = new TestDatalist<GuidModel>();
+            for (Int32 i = 0; i < 20; i++) testDatalist.Models.Add(new GuidModel { Id = Guid.NewGuid() });
+            List<String> ids = new List<String> { testDatalist.Models[4].Id.ToString(), testDatalist.Models[9].Id.ToString() };
+
+            IQueryable<GuidModel> expected = testDatalist.GetModels().Where(model => !ids.Contains(model.Id.ToString()));
+            IQueryable<GuidModel> actual = testDatalist.FilterByNotIds(testDatalist.GetModels(), ids);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void FilterByNotIds_Int32Key()
         {
             TestDatalist<Int32Model> testDatalist = new TestDatalist<Int32Model>();
@@ -560,9 +586,9 @@ namespace Datalist.Tests.Unit
         [Fact]
         public void FilterByNotIds_NotSupportedIdType_Throws()
         {
-            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<GuidModel>().FilterByNotIds(null, new String[0]));
+            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<Int16Model>().FilterByNotIds(null, new String[0]));
 
-            String expected = $"'{typeof(GuidModel).Name}.Id' property type has to be a string, int or a long.";
+            String expected = $"'{typeof(Int16Model).Name}.Id' property type has to be a string, guid, int or a long.";
             String actual = exception.Message;
 
             Assert.Equal(expected, actual);
@@ -625,9 +651,9 @@ namespace Datalist.Tests.Unit
         [Fact]
         public void FilterByCheckIds_NotSupportedIdType_Throws()
         {
-            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<GuidModel>().FilterByCheckIds(null, new String[0]));
+            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<Int16Model>().FilterByCheckIds(null, new String[0]));
 
-            String expected = $"'{typeof(GuidModel).Name}.Id' property type has to be a string, int or a long.";
+            String expected = $"'{typeof(Int16Model).Name}.Id' property type has to be a string, guid, int or a long.";
             String actual = exception.Message;
 
             Assert.Equal(expected, actual);
@@ -690,9 +716,9 @@ namespace Datalist.Tests.Unit
         [Fact]
         public void FilterBySelected_NotSupportedIdType_Throws()
         {
-            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<GuidModel>().FilterBySelected(null, new String[0]));
+            DatalistException exception = Assert.Throws<DatalistException>(() => new TestDatalist<Int16Model>().FilterBySelected(null, new String[0]));
 
-            String expected = $"'{typeof(GuidModel).Name}.Id' property type has to be a string, int or a long.";
+            String expected = $"'{typeof(Int16Model).Name}.Id' property type has to be a string, guid, int or a long.";
             String actual = exception.Message;
 
             Assert.Equal(expected, actual);
