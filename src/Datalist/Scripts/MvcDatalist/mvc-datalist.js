@@ -195,7 +195,7 @@ var MvcDatalistDialog = (function () {
             var hasSelection = rows.length && this.datalist.indexOf(this.selected, rows[0].Id) >= 0;
 
             for (var i = 0; i < rows.length; i++) {
-                var row = this.createDataRow(rows[i]);
+                var dataRow = this.createDataRow(rows[i]);
                 var selection = document.createElement('td');
 
                 for (var j = 0; j < columns.length; j++) {
@@ -204,26 +204,26 @@ var MvcDatalistDialog = (function () {
                         data.className = columns[j].CssClass || '';
                         data.innerText = rows[i][columns[j].Key] || '';
 
-                        row.appendChild(data);
+                        dataRow.appendChild(data);
                     }
                 }
 
-                row.appendChild(selection);
+                dataRow.appendChild(selection);
 
                 if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].Id) < 0) {
                     var separator = document.createElement('tr');
-                    var empty = document.createElement('td');
+                    var content = document.createElement('td');
 
                     separator.className = 'datalist-split';
-                    empty.colSpan = columns.length + 1;
+                    content.colSpan = columns.length + 1;
 
                     this.tableBody.appendChild(separator);
-                    separator.appendChild(empty);
+                    separator.appendChild(content);
 
                     hasSplit = true;
                 }
 
-                this.tableBody.appendChild(row);
+                this.tableBody.appendChild(dataRow);
             }
         },
         renderFooter: function (filteredRows) {
@@ -390,14 +390,14 @@ var MvcDatalistDialog = (function () {
 }());
 var MvcDatalistOverlay = (function () {
     function MvcDatalistOverlay(dialog) {
-        this.element = this.getClosestOverlay(dialog.element);
+        this.element = this.findOverlay(dialog.element);
         this.dialog = dialog;
 
         this.bind();
     }
 
     MvcDatalistOverlay.prototype = {
-        getClosestOverlay: function (element) {
+        findOverlay: function (element) {
             var overlay = element;
             while (overlay && !overlay.classList.contains('datalist-overlay')) {
                 overlay = overlay.parentElement;
@@ -416,7 +416,7 @@ var MvcDatalistOverlay = (function () {
                 var scrollWidth = window.innerWidth - document.body.clientWidth;
                 var paddingRight = parseFloat(getComputedStyle(document.body).paddingRight);
 
-                document.body.style.paddingRight = (paddingRight + scrollWidth) + 'px';
+                document.body.style.paddingRight = paddingRight + scrollWidth + 'px';
             }
 
             document.body.classList.add('datalist-open');
@@ -520,7 +520,7 @@ var MvcDatalistAutocomplete = (function () {
 
             if (this.activeItem) {
                 this.activeItem.classList.remove('active');
-                this.activeItem = this.activeItem.nextElementSibling
+                this.activeItem = this.activeItem.nextElementSibling;
             } else {
                 this.activeItem = this.element.firstElementChild;
             }
@@ -532,8 +532,8 @@ var MvcDatalistAutocomplete = (function () {
         show: function () {
             var search = this.datalist.search.getBoundingClientRect();
 
-            this.element.style.left = (search.left + window.pageXOffset) + 'px';
-            this.element.style.top = (search.top + search.height + window.pageYOffset) + 'px';
+            this.element.style.left = search.left + window.pageXOffset + 'px';
+            this.element.style.top = search.top + search.height + window.pageYOffset + 'px';
 
             document.body.appendChild(this.element);
         },
@@ -581,7 +581,7 @@ var MvcDatalistAutocomplete = (function () {
 var MvcDatalist = (function () {
     function MvcDatalist(element, options) {
         var datalist = this;
-        var group = datalist.closestGroup(element);
+        var group = datalist.findDatalist(element);
         if (group.dataset.id) {
             return datalist.instances[parseInt(group.dataset.id)].set(options || {});
         }
@@ -624,17 +624,17 @@ var MvcDatalist = (function () {
             error: 'Error while retrieving records'
         },
 
-        closestGroup: function (element) {
-            var group = element;
-            while (group && !group.classList.contains('datalist')) {
-                group = group.parentElement;
+        findDatalist: function (element) {
+            var datalist = element;
+            while (datalist && !datalist.classList.contains('datalist')) {
+                datalist = datalist.parentElement;
             }
 
-            if (!group) {
+            if (!datalist) {
                 throw new Error('Datalist can only be created from within datalist structure.');
             }
 
-            return group;
+            return datalist;
         },
 
         extend: function () {
@@ -743,7 +743,7 @@ var MvcDatalist = (function () {
 
             if (datalist.multi) {
                 datalist.search.value = '';
-                datalist.valueContainer.innerHTML = '';;
+                datalist.valueContainer.innerHTML = '';
                 datalist.items.forEach(function (item) {
                     item.parentElement.removeChild(item);
                 });
@@ -768,10 +768,9 @@ var MvcDatalist = (function () {
             }
 
             if (triggerChanges) {
-                if (typeof (Event) === 'function') {
-                    var change = new Event('change');
-                } else {
-                    var change = document.createEvent('Event');
+                var change = new Event('change');
+                if (typeof Event !== 'function') {
+                    change = document.createEvent('Event');
                     change.initEvent('change', true, true);
                 }
 
@@ -854,7 +853,7 @@ var MvcDatalist = (function () {
                 if (200 <= datalist.request.status && datalist.request.status < 400) {
                     datalist.stopLoading();
 
-                    success(JSON.parse(datalist.request.responseText))
+                    success(JSON.parse(datalist.request.responseText));
                 } else {
                     datalist.request.onerror();
                 }
@@ -977,10 +976,9 @@ var MvcDatalist = (function () {
 
                     datalist.autocomplete.next();
                 } else if (e.which == 13 && datalist.autocomplete.activeItem) {
-                    if (typeof (Event) === 'function') {
-                        var click = new Event('click');
-                    } else {
-                        var click = document.createEvent('Event');
+                    var click = new Event('click');
+                    if (typeof Event !== 'function') {
+                        click = document.createEvent('Event');
                         click.initEvent('click', true, true);
                     }
 
