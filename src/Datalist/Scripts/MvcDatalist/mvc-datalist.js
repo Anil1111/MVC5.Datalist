@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 6.0.0
+ * Datalist 6.1.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
