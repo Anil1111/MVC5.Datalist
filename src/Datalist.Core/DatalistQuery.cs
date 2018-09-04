@@ -4,28 +4,32 @@ using System.Linq.Expressions;
 
 namespace Datalist
 {
-    internal class DatalistQuery : ExpressionVisitor
+    public static class DatalistQuery
     {
-        public Boolean Ordered { get; set; }
-
         public static Boolean IsOrdered(IQueryable models)
         {
-            DatalistQuery query = new DatalistQuery();
-            query.Visit(models.Expression);
+            DatalistExpressionVisitor expression = new DatalistExpressionVisitor();
+            expression.Visit(models.Expression);
 
-            return query.Ordered;
+            return expression.Ordered;
         }
 
-        protected override Expression VisitMethodCall(MethodCallExpression node)
+        private class DatalistExpressionVisitor : ExpressionVisitor
         {
-            if (node.Method.DeclaringType == typeof(Queryable) && (node.Method.Name.StartsWith("OrderBy") || node.Method.Name.StartsWith("ThenBy")))
+            public Boolean Ordered { get; set; }
+
+            protected override Expression VisitMethodCall(MethodCallExpression node)
             {
+                if (node.Method.DeclaringType != typeof(Queryable))
+                    return base.VisitMethodCall(node);
+
+                if (!node.Method.Name.StartsWith("OrderBy"))
+                    return base.VisitMethodCall(node);
+
                 Ordered = true;
 
                 return node;
             }
-
-            return base.VisitMethodCall(node);
         }
     }
 }
