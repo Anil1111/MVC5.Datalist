@@ -430,11 +430,17 @@ var MvcDatalistOverlay = (function () {
 
         bind: function () {
             this.element.addEventListener('click', this.onClick);
+            document.addEventListener('keydown', this.onKeyDown);
         },
         onClick: function (e) {
             var targetClasses = (e.target || e.srcElement).classList;
 
             if (targetClasses.contains('datalist-overlay') || targetClasses.contains('datalist-wrapper')) {
+                MvcDatalistDialog.prototype.current.close();
+            }
+        },
+        onKeyDown: function (e) {
+            if (e.which == 27 && MvcDatalistDialog.prototype.current) {
                 MvcDatalistDialog.prototype.current.close();
             }
         }
