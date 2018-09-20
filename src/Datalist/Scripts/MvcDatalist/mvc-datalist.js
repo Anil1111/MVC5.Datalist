@@ -399,6 +399,11 @@ var MvcDatalistOverlay = (function () {
     MvcDatalistOverlay.prototype = {
         findOverlay: function (element) {
             var overlay = element;
+
+            if (!overlay) {
+                throw new Error('Datalist dialog element was not found.');
+            }
+
             while (overlay && !overlay.classList.contains('datalist-overlay')) {
                 overlay = overlay.parentElement;
             }
@@ -632,6 +637,11 @@ var MvcDatalist = (function () {
 
         findDatalist: function (element) {
             var datalist = element;
+
+            if (!datalist) {
+                throw new Error('Datalist element was not specified.');
+            }
+
             while (datalist && !datalist.classList.contains('datalist')) {
                 datalist = datalist.parentElement;
             }
