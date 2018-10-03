@@ -267,11 +267,9 @@ var MvcDatalistDialog = (function () {
 
             page.innerHTML = text;
             page.addEventListener('click', function () {
-                if (filter.page != value) {
-                    filter.page = dialog.limitPage(value);
+                filter.page = dialog.limitPage(value);
 
-                    dialog.refresh();
-                }
+                dialog.refresh();
             });
 
             dialog.pager.appendChild(page);
